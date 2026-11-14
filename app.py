@@ -241,71 +241,205 @@ def features(tree, code):
       "return":any(isinstance(n,ast.Return) for n in nodes),
     }
 
-# Do not run arbitrary submitted Python on a public server. We accept a
-# deliberately limited subset and execute it in a child process with timeout.
-# This is NOT a hardened sandbox: public deployment should use AST-only checks
-# or a separately isolated execution service. Here we use AST-only verification
-# with a conservative static evaluator for simple beginner exercises.
-class CannotEvaluate(Exception): pass
+# Interpret a small subset of Python syntax without executing student code.
+class CannotEvaluate(Exception):
+    pass
 
-def evaluate_expr(node, env):
-    if isinstance(node,ast.Constant) and isinstance(node.value,(int,float,str,bool,type(None))): return node.value
-    if isinstance(node,ast.Name) and node.id in env: return env[node.id]
-    if isinstance(node,ast.List): return [evaluate_expr(x,env) for x in node.elts]
-    if isinstance(node,ast.Tuple): return tuple(evaluate_expr(x,env) for x in node.elts)
-    if isinstance(node,ast.BinOp):
-        a=evaluate_expr(node.left,env); b=evaluate_expr(node.right,env)
-        if isinstance(node.op,ast.Add): return a+b
-        if isinstance(node.op,ast.Sub): return a-b
-        if isinstance(node.op,ast.Mult): return a*b
-        if isinstance(node.op,ast.Div): return a/b
-    if isinstance(node,ast.Compare) and len(node.ops)==1:
-        a=evaluate_expr(node.left,env); b=evaluate_expr(node.comparators[0],env)
-        op=node.ops[0]
-        if isinstance(op,ast.Gt): return a>b
-        if isinstance(op,ast.Lt): return a<b
-        if isinstance(op,ast.Eq): return a==b
-        if isinstance(op,ast.GtE): return a>=b
-        if isinstance(op,ast.LtE): return a<=b
-        if isinstance(op,ast.NotEq): return a!=b
-    if isinstance(node,ast.Call) and isinstance(node.func,ast.Name):
-        args=[evaluate_expr(a,env) for a in node.args]
-        if node.func.id=='len' and len(args)==1: return len(args[0])
-        if node.func.id=='range' and 1<=len(args)<=3: return range(*args)
-        if node.func.id in env and isinstance(env[node.func.id],ast.FunctionDef):
-            fn=env[node.func.id]
-            if len(args)!=len(fn.args.args): raise CannotEvaluate()
-            local=dict(env); local.update(zip((a.arg for a in fn.args.args),args))
-            if len(fn.body)==1 and isinstance(fn.body[0],ast.Return): return evaluate_expr(fn.body[0].value,local)
-    raise CannotEvaluate()
 
 def evaluate_program(tree):
-    env={}; out=[]; steps=[0]
-    def block(statements, local):
-        for n in statements:
-            steps[0]+=1
-            if steps[0]>200: raise CannotEvaluate()
-            if isinstance(n,ast.Assign) and len(n.targets)==1 and isinstance(n.targets[0],ast.Name):
-                local[n.targets[0].id]=evaluate_expr(n.value,local)
-            elif isinstance(n,ast.AugAssign) and isinstance(n.target,ast.Name) and isinstance(n.op,ast.Add):
-                local[n.target.id]+=evaluate_expr(n.value,local)
-            elif isinstance(n,ast.Expr) and isinstance(n.value,ast.Call) and isinstance(n.value.func,ast.Name) and n.value.func.id=='print':
-                vals=[evaluate_expr(x,local) for x in n.value.args]
-                out.append(' '.join(str(v) for v in vals)+'\n')
-            elif isinstance(n,ast.Expr) and isinstance(n.value,ast.Call) and isinstance(n.value.func,ast.Attribute) and n.value.func.attr=='append' and isinstance(n.value.func.value,ast.Name):
-                local[n.value.func.value.id].append(evaluate_expr(n.value.args[0],local))
-            elif isinstance(n,ast.If):
-                block(n.body if evaluate_expr(n.test,local) else n.orelse,local)
-            elif isinstance(n,ast.For) and isinstance(n.target,ast.Name):
-                iterable=evaluate_expr(n.iter,local)
-                if len(iterable)>100: raise CannotEvaluate()
-                for v in iterable:
-                    local[n.target.id]=v; block(n.body,local)
-            elif isinstance(n,ast.FunctionDef): local[n.name]=n
-            elif isinstance(n,ast.Pass): pass
-            else: raise CannotEvaluate()
-    block(tree.body,env)
-    return ''.join(out)
+    remaining = 1200
+    output = []
+    output_size = 0
+
+    def tick():
+        nonlocal remaining
+        remaining -= 1
+        if remaining < 0:
+            raise CannotEvaluate()
+
+    def bounded(value):
+        # Count nested items even when a list refers to the same item twice.
+        budget = 2000
+
+        def visit(item, depth):
+            nonlocal budget
+            budget -= 1 + (len(item) if type(item) is str else 0)
+            if budget < 0 or depth > 12:
+                raise CannotEvaluate()
+            if type(item) is int and item.bit_length() > 512:
+                raise CannotEvaluate()
+            if type(item) in (list, tuple):
+                for child in item:
+                    visit(child, depth + 1)
+            elif type(item) not in (int, float, str, bool, range, type(None)):
+                raise CannotEvaluate()
+
+        visit(value, 0)
+        return value
+
+    def expr(node, env, functions, depth):
+        tick()
+        if depth > 24:
+            raise CannotEvaluate()
+        read = lambda child: expr(child, env, functions, depth + 1)
+        if isinstance(node, ast.Constant):
+            return bounded(node.value)
+        if isinstance(node, ast.Name):
+            if node.id not in env:
+                raise NameError(node.id)
+            return bounded(env[node.id])
+        if isinstance(node, (ast.List, ast.Tuple)):
+            items = [read(child) for child in node.elts]
+            return bounded(items if isinstance(node, ast.List) else tuple(items))
+        if isinstance(node, ast.Subscript):
+            return bounded(read(node.value)[read(node.slice)])
+        if isinstance(node, ast.UnaryOp):
+            value = read(node.operand)
+            if isinstance(node.op, ast.USub):
+                return bounded(-value)
+            if isinstance(node.op, ast.UAdd):
+                return bounded(+value)
+            if isinstance(node.op, ast.Not):
+                return not value
+        if isinstance(node, ast.BinOp):
+            a, b = read(node.left), read(node.right)
+            if isinstance(node.op, ast.Add):
+                return bounded(a + b)
+            if isinstance(node.op, ast.Sub):
+                return bounded(a - b)
+            if isinstance(node.op, ast.Mult):
+                for seq, count in ((a, b), (b, a)):
+                    if type(seq) in (str, list, tuple) and type(count) in (int, bool):
+                        if count > 2000 or len(seq) * max(count, 0) > 2000:
+                            raise CannotEvaluate()
+                return bounded(a * b)
+            if isinstance(node.op, ast.Div):
+                return bounded(a / b)
+        if isinstance(node, ast.Compare) and len(node.ops) == 1:
+            a, b = read(node.left), read(node.comparators[0])
+            op = node.ops[0]
+            if isinstance(op, ast.Gt):
+                return a > b
+            if isinstance(op, ast.Lt):
+                return a < b
+            if isinstance(op, ast.Eq):
+                return a == b
+            if isinstance(op, ast.GtE):
+                return a >= b
+            if isinstance(op, ast.LtE):
+                return a <= b
+            if isinstance(op, ast.NotEq):
+                return a != b
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and not node.keywords:
+            name = node.func.id
+            args = [read(arg) for arg in node.args]
+            if name in functions and name not in env:
+                fn = functions[name]
+                if len(args) != len(fn.args.args):
+                    raise TypeError()
+                local = dict(env)
+                local.update(zip((arg.arg for arg in fn.args.args), args))
+                return block(fn.body, local, dict(functions), depth + 1, True)[1]
+            if name not in env and name == "len" and len(args) == 1:
+                return bounded(len(args[0]))
+            if name not in env and name == "range" and 1 <= len(args) <= 3:
+                return range(*args)
+        raise CannotEvaluate()
+
+    def block(statements, env, functions, depth=0, in_function=False):
+        nonlocal output_size
+        if depth > 24:
+            raise CannotEvaluate()
+        read = lambda node: expr(node, env, functions, depth + 1)
+        for node in statements:
+            tick()
+            if isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
+                env[node.targets[0].id] = read(node.value)
+            elif isinstance(node, ast.AugAssign) and isinstance(node.target, ast.Name) and isinstance(node.op, ast.Add):
+                current = read(node.target)
+                extra = read(node.value)
+                updated = bounded(current + extra)
+                if type(current) is list:
+                    current[:] = updated
+                    bounded(current)
+                else:
+                    env[node.target.id] = updated
+            elif isinstance(node, ast.Expr) and isinstance(node.value, ast.Call):
+                call = node.value
+                if call.keywords:
+                    raise CannotEvaluate()
+                if isinstance(call.func, ast.Name) and call.func.id == "print" and "print" not in env and "print" not in functions:
+                    line = " ".join(str(read(arg)) for arg in call.args) + "\n"
+                    output_size += len(line)
+                    if output_size > 5000:
+                        raise CannotEvaluate()
+                    output.append(line)
+                elif isinstance(call.func, ast.Attribute) and call.func.attr == "append" and len(call.args) == 1:
+                    target = read(call.func.value)
+                    if type(target) is not list:
+                        raise CannotEvaluate()
+                    target.append(read(call.args[0]))
+                    bounded(target)
+                else:
+                    read(call)
+            elif isinstance(node, ast.If):
+                returned, value = block(node.body if read(node.test) else node.orelse, env, functions, depth + 1, in_function)
+                if returned:
+                    return True, value
+            elif isinstance(node, ast.For) and isinstance(node.target, ast.Name) and not node.orelse:
+                iterable = read(node.iter)
+                if len(iterable) > 100:
+                    raise CannotEvaluate()
+                for item in iterable:
+                    tick()
+                    env[node.target.id] = bounded(item)
+                    returned, value = block(node.body, env, functions, depth + 1, in_function)
+                    if returned:
+                        return True, value
+            elif isinstance(node, ast.FunctionDef):
+                args = node.args
+                if (node.decorator_list or node.returns or args.posonlyargs or args.kwonlyargs
+                        or args.vararg or args.kwarg or args.defaults or any(arg.annotation for arg in args.args)):
+                    raise CannotEvaluate()
+                functions[node.name] = node
+                env.pop(node.name, None)
+            elif isinstance(node, ast.Return) and in_function:
+                return True, read(node.value) if node.value is not None else None
+            elif isinstance(node, ast.Expr):
+                read(node.value)
+            elif not isinstance(node, ast.Pass):
+                raise CannotEvaluate()
+        return False, None
+
+    block(tree.body, {}, {})
+    return "".join(output)
+
+
+EVALUATION_ERRORS = (CannotEvaluate, TypeError, ValueError, ArithmeticError,
+                     NameError, LookupError, RecursionError)
+
+
+def run_student_code(code):
+    if not code.strip():
+        return "warning", "Najskôr napíš kód."
+    if len(code) > 4000:
+        return "warning", "Kód je príliš dlhý. Skús kratší program."
+    try:
+        # Compile only to validate syntax (e.g. return outside a function).
+        # The compiled code is never executed.
+        compile(code, "<žiacky kód>", "exec", dont_inherit=True)
+        return "success", evaluate_program(ast.parse(code))
+    except SyntaxError as error:
+        return "error", f"Syntaktická chyba na riadku {error.lineno}: {error.msg}"
+    except NameError as error:
+        return "error", f"Názov {str(error)!r} nie je definovaný. Ak chceš vypísať text, vlož ho do úvodzoviek."
+    except ZeroDivisionError:
+        return "error", "Nulou sa nedá deliť."
+    except IndexError:
+        return "error", "Takýto index v zozname alebo texte neexistuje."
+    except EVALUATION_ERRORS:
+        return "info", "Tento zápis alebo rozsah programu náhľad nepodporuje. Skús krátky príklad s print(), premennými, výpočtami, if alebo for."
+
 
 def check_answer(code, task):
     if not code.strip(): return "warning", "Najskôr napíš svoj kód."
@@ -318,7 +452,7 @@ def check_answer(code, task):
     missing=[f for f in task.get('required',[]) if not found.get(f)]
     if missing: return "warning", "Kód má správnu syntax, ale chýba požadovaný spôsob riešenia. Nápoveda: "+task['hint']
     try: result=evaluate_program(tree)
-    except (CannotEvaluate,TypeError,ValueError,ZeroDivisionError,KeyError,IndexError,OverflowError,RecursionError) as e:
+    except EVALUATION_ERRORS:
         return "info", "Syntax je správna, ale tento spôsob zápisu automatická kontrola ešte nepodporuje. Skús jednoduchší zápis podľa príkladu."
     if result==task['expected']: return "success", "Správne! Program spĺňa požadovaný výstup aj kontrolované pravidlá zadania. Môžeš kliknúť na Next Task."
     return "warning", "Syntax je správna, ale výsledok nezodpovedá zadaniu. Očakávaný výstup: " + repr(task['expected'].rstrip('\n')) + ". Tvoj výstup: " + repr(result.rstrip('\n')) + "."
@@ -337,6 +471,7 @@ with st.sidebar:
     if chapter!=st.session_state.chapter_index:
         st.session_state.chapter_index=chapter
         st.session_state.result=None
+        st.session_state.pop('run_result',None)
     st.subheader('Your progress')
     st.progress(len(st.session_state.completed)/len(TOPICS))
     st.write(f'{len(st.session_state.completed)} of {len(TOPICS)} chapters completed')
@@ -344,6 +479,7 @@ with st.sidebar:
         st.session_state.completed=[]
         st.session_state.task_positions={}
         st.session_state.result=None
+        st.session_state.pop('run_result',None)
         st.rerun()
 
 topic=TOPICS[chapter]
@@ -380,7 +516,7 @@ try:
     if sample_result:
         st.write('**Výstup príkladu:**')
         st.code(sample_result,language='text')
-except (CannotEvaluate, TypeError, ValueError, ZeroDivisionError, KeyError, IndexError, OverflowError, RecursionError):
+except EVALUATION_ERRORS:
     st.caption('Výstup tohto príkladu sa v bezpečnom náhľade nedá automaticky vypočítať.')
 st.divider()
 st.markdown(f'### 📝 Task {pos+1} of {len(tasks)}: {task["title"]}')
@@ -389,15 +525,31 @@ with st.expander('💡 Hint / Nápoveda'):
     st.write(task['hint'])
 code_key=f'code_{chapter}_{pos}'
 student_code=st.text_area('Write your Python code:',key=code_key,height=180,placeholder='print("Hello, Python!")')
-left,right=st.columns(2)
+st.caption("Run Code ukáže výstup podporovaných príkazov aj bez kontroly zadania.")
+left,middle,right=st.columns(3)
 with left:
+    if st.button('▶ Run Code',use_container_width=True):
+        st.session_state.run_result=(chapter,pos,student_code,*run_student_code(student_code))
+with middle:
     if st.button('✅ Check my solution',use_container_width=True):
         st.session_state.result=(chapter,pos,*check_answer(student_code,task))
 with right:
     if st.button('➡️ Next Task',use_container_width=True,disabled=(pos>=len(tasks)-1)):
         st.session_state.task_positions[chapter]=pos+1
         st.session_state.result=None
+        st.session_state.pop('run_result',None)
         st.rerun()
+run_result=st.session_state.get('run_result')
+if run_result and run_result[:3]==(chapter,pos,student_code):
+    _,_,_,run_status,run_message=run_result
+    st.markdown('#### Program Output / Výstup programu')
+    if run_status=='success':
+        if run_message:
+            st.code(run_message,language='text')
+        else:
+            st.info('Program nič nevypísal. Na zobrazenie výsledku použi print().')
+    else:
+        getattr(st,run_status)(run_message)
 if st.session_state.result and st.session_state.result[:2]==(chapter,pos):
     _,_,status,message=st.session_state.result
     getattr(st,status)(message)
@@ -406,6 +558,7 @@ if pos==len(tasks)-1:
 if st.button('↩️ First Task in this chapter'):
     st.session_state.task_positions[chapter]=0
     st.session_state.result=None
+    st.session_state.pop('run_result',None)
     st.rerun()
 st.divider()
 completed=chapter in st.session_state.completed
