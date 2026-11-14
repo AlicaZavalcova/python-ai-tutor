@@ -1108,6 +1108,1608 @@ DETAILED_EXPLANATIONS.update({'Type Conversion': ('Prevod typov / Type conversio
                           'Predvolené meniteľné hodnoty ako `[]` môžu viesť k prekvapivému zdieľaniu stavu. '
                           'Náhľad podporuje iba časť syntaxe funkcií.')})
 
+
+# Chapters 25–43: eight progressive activities and bilingual detailed explanations.
+TASKS.update({'Decorators': [{'title': 'Wrapper',
+                 'prompt': 'Vytvor funkciu wrapper, ktorá zavolá inú funkciu.',
+                 'example': 'def wrapper():\n    print("before")\n    print("hello")',
+                 'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Dekorátor '
+                         'musí spravidla vrátiť funkciu; `@` nie je operátor násobenia.',
+                 'mode': 'syntax'},
+                {'title': 'Function as argument',
+                 'prompt': 'Napíš dekorátor, ktorý prijme funkciu ako argument.',
+                 'example': 'def decorate(fn):\n'
+                            '    def wrapper():\n'
+                            '        print("start")\n'
+                            '        fn()\n'
+                            '    return wrapper',
+                 'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Dekorátor '
+                         'musí spravidla vrátiť funkciu; `@` nie je operátor násobenia.',
+                 'mode': 'syntax'},
+                {'title': 'At syntax',
+                 'prompt': 'Použi zápis @decorate pri funkcii greet.',
+                 'example': 'def decorate(fn):\n'
+                            '    def wrapper():\n'
+                            '        print("start")\n'
+                            '        fn()\n'
+                            '    return wrapper\n'
+                            '\n'
+                            '@decorate\n'
+                            'def greet():\n'
+                            '    print("Hi")',
+                 'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Dekorátor '
+                         'musí spravidla vrátiť funkciu; `@` nie je operátor násobenia.',
+                 'mode': 'syntax'},
+                {'title': 'Return value',
+                 'prompt': 'Vytvor dekorátor, ktorý zachová návratovú hodnotu funkcie.',
+                 'example': 'def decorate(fn):\n    def wrapper():\n        return fn()\n    return wrapper',
+                 'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Dekorátor '
+                         'musí spravidla vrátiť funkciu; `@` nie je operátor násobenia.',
+                 'mode': 'syntax'},
+                {'title': 'Challenge: Wrapper',
+                 'prompt': 'Rozšírenie úlohy: Vytvor funkciu wrapper, ktorá zavolá inú funkciu. Zmeň aspoň '
+                           'jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                 'example': 'def wrapper():\n'
+                            '    print("before")\n'
+                            '    print("hello")\n'
+                            '# Explain your modification here',
+                 'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+                 'mode': 'syntax'},
+                {'title': 'Challenge: Function as argument',
+                 'prompt': 'Rozšírenie úlohy: Napíš dekorátor, ktorý prijme funkciu ako argument. Zmeň aspoň '
+                           'jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                 'example': 'def decorate(fn):\n'
+                            '    def wrapper():\n'
+                            '        print("start")\n'
+                            '        fn()\n'
+                            '    return wrapper\n'
+                            '# Explain your modification here',
+                 'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+                 'mode': 'syntax'},
+                {'title': 'Challenge: At syntax',
+                 'prompt': 'Rozšírenie úlohy: Použi zápis @decorate pri funkcii greet. Zmeň aspoň jednu '
+                           'vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                 'example': 'def decorate(fn):\n'
+                            '    def wrapper():\n'
+                            '        print("start")\n'
+                            '        fn()\n'
+                            '    return wrapper\n'
+                            '\n'
+                            '@decorate\n'
+                            'def greet():\n'
+                            '    print("Hi")\n'
+                            '# Explain your modification here',
+                 'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+                 'mode': 'syntax'},
+                {'title': 'Challenge: Return value',
+                 'prompt': 'Rozšírenie úlohy: Vytvor dekorátor, ktorý zachová návratovú hodnotu funkcie. '
+                           'Zmeň aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                           'výsledok.',
+                 'example': 'def decorate(fn):\n'
+                            '    def wrapper():\n'
+                            '        return fn()\n'
+                            '    return wrapper\n'
+                            '# Explain your modification here',
+                 'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+                 'mode': 'syntax'}],
+ 'Classes': [{'title': 'Simple class',
+              'prompt': 'Vytvor prázdnu triedu Animal a jej objekt.',
+              'example': 'class Animal:\n    pass\n\na = Animal()',
+              'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. V metódach '
+                      'nezabudni na parameter `self` a na odsadenie.',
+              'mode': 'syntax'},
+             {'title': 'Constructor',
+              'prompt': 'Vytvor triedu Dog s atribútom name.',
+              'example': 'class Dog:\n    def __init__(self, name):\n        self.name = name',
+              'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. V metódach '
+                      'nezabudni na parameter `self` a na odsadenie.',
+              'mode': 'syntax'},
+             {'title': 'Method',
+              'prompt': 'Pridaj triede Dog metódu speak, ktorá vráti Woof.',
+              'example': 'class Dog:\n    def speak(self):\n        return "Woof"',
+              'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. V metódach '
+                      'nezabudni na parameter `self` a na odsadenie.',
+              'mode': 'syntax'},
+             {'title': 'Instances',
+              'prompt': 'Vytvor dve inštancie s odlišnými menami.',
+              'example': 'class Dog:\n'
+                         '    def __init__(self, name):\n'
+                         '        self.name = name\n'
+                         '\n'
+                         'a = Dog("Max")\n'
+                         'b = Dog("Luna")',
+              'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. V metódach '
+                      'nezabudni na parameter `self` a na odsadenie.',
+              'mode': 'syntax'},
+             {'title': 'Challenge: Simple class',
+              'prompt': 'Rozšírenie úlohy: Vytvor prázdnu triedu Animal a jej objekt. Zmeň aspoň jednu '
+                        'vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+              'example': 'class Animal:\n    pass\n\na = Animal()\n# Explain your modification here',
+              'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+              'mode': 'syntax'},
+             {'title': 'Challenge: Constructor',
+              'prompt': 'Rozšírenie úlohy: Vytvor triedu Dog s atribútom name. Zmeň aspoň jednu vstupnú '
+                        'hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+              'example': 'class Dog:\n'
+                         '    def __init__(self, name):\n'
+                         '        self.name = name\n'
+                         '# Explain your modification here',
+              'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+              'mode': 'syntax'},
+             {'title': 'Challenge: Method',
+              'prompt': 'Rozšírenie úlohy: Pridaj triede Dog metódu speak, ktorá vráti Woof. Zmeň aspoň '
+                        'jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+              'example': 'class Dog:\n'
+                         '    def speak(self):\n'
+                         '        return "Woof"\n'
+                         '# Explain your modification here',
+              'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+              'mode': 'syntax'},
+             {'title': 'Challenge: Instances',
+              'prompt': 'Rozšírenie úlohy: Vytvor dve inštancie s odlišnými menami. Zmeň aspoň jednu vstupnú '
+                        'hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+              'example': 'class Dog:\n'
+                         '    def __init__(self, name):\n'
+                         '        self.name = name\n'
+                         '\n'
+                         'a = Dog("Max")\n'
+                         'b = Dog("Luna")\n'
+                         '# Explain your modification here',
+              'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+              'mode': 'syntax'}],
+ 'Classes in Details': [{'title': 'Class attribute',
+                         'prompt': 'Vytvor triedu s triednym atribútom species.',
+                         'example': 'class Dog:\n    species = "canine"',
+                         'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                 'Nezamieňaj `self` (objekt) a `cls` (trieda).',
+                         'mode': 'syntax'},
+                        {'title': 'Instance attribute',
+                         'prompt': 'Pridaj každému objektu vlastné meno cez __init__.',
+                         'example': 'class Dog:\n    def __init__(self, name):\n        self.name = name',
+                         'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                 'Nezamieňaj `self` (objekt) a `cls` (trieda).',
+                         'mode': 'syntax'},
+                        {'title': 'Class method',
+                         'prompt': 'Napíš jednoduchú triednu metódu.',
+                         'example': 'class Counter:\n'
+                                    '    total = 0\n'
+                                    '    @classmethod\n'
+                                    '    def get_total(cls):\n'
+                                    '        return cls.total',
+                         'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                 'Nezamieňaj `self` (objekt) a `cls` (trieda).',
+                         'mode': 'syntax'},
+                        {'title': 'Static method',
+                         'prompt': 'Napíš statickú metódu na sčítanie dvoch čísel.',
+                         'example': 'class Math:\n'
+                                    '    @staticmethod\n'
+                                    '    def add(a, b):\n'
+                                    '        return a + b',
+                         'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                 'Nezamieňaj `self` (objekt) a `cls` (trieda).',
+                         'mode': 'syntax'},
+                        {'title': 'Challenge: Class attribute',
+                         'prompt': 'Rozšírenie úlohy: Vytvor triedu s triednym atribútom species. Zmeň aspoň '
+                                   'jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                   'výsledok.',
+                         'example': 'class Dog:\n    species = "canine"\n# Explain your modification here',
+                         'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                 'výsledok.',
+                         'mode': 'syntax'},
+                        {'title': 'Challenge: Instance attribute',
+                         'prompt': 'Rozšírenie úlohy: Pridaj každému objektu vlastné meno cez __init__. Zmeň '
+                                   'aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                   'výsledok.',
+                         'example': 'class Dog:\n'
+                                    '    def __init__(self, name):\n'
+                                    '        self.name = name\n'
+                                    '# Explain your modification here',
+                         'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                 'výsledok.',
+                         'mode': 'syntax'},
+                        {'title': 'Challenge: Class method',
+                         'prompt': 'Rozšírenie úlohy: Napíš jednoduchú triednu metódu. Zmeň aspoň jednu '
+                                   'vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                         'example': 'class Counter:\n'
+                                    '    total = 0\n'
+                                    '    @classmethod\n'
+                                    '    def get_total(cls):\n'
+                                    '        return cls.total\n'
+                                    '# Explain your modification here',
+                         'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                 'výsledok.',
+                         'mode': 'syntax'},
+                        {'title': 'Challenge: Static method',
+                         'prompt': 'Rozšírenie úlohy: Napíš statickú metódu na sčítanie dvoch čísel. Zmeň '
+                                   'aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                   'výsledok.',
+                         'example': 'class Math:\n'
+                                    '    @staticmethod\n'
+                                    '    def add(a, b):\n'
+                                    '        return a + b\n'
+                                    '# Explain your modification here',
+                         'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                 'výsledok.',
+                         'mode': 'syntax'}],
+ 'Iterators and Generators': [{'title': 'Iterator',
+                               'prompt': 'Vytvor iterátor zo zoznamu a vyber prvý prvok.',
+                               'example': 'items = iter([10, 20, 30])\nprint(next(items))',
+                               'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo '
+                                       'fungujú. `yield` nie je to isté ako `return`; generátor sa môže '
+                                       'vyčerpať.',
+                               'mode': 'syntax'},
+                              {'title': 'Generator',
+                               'prompt': 'Vytvor generátor, ktorý vydá dve čísla.',
+                               'example': 'def numbers():\n    yield 1\n    yield 2',
+                               'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo '
+                                       'fungujú. `yield` nie je to isté ako `return`; generátor sa môže '
+                                       'vyčerpať.',
+                               'mode': 'syntax'},
+                              {'title': 'Generator loop',
+                               'prompt': 'Prejdi generátor pomocou for.',
+                               'example': 'def numbers():\n'
+                                          '    yield 1\n'
+                                          '    yield 2\n'
+                                          'for n in numbers():\n'
+                                          '    print(n)',
+                               'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo '
+                                       'fungujú. `yield` nie je to isté ako `return`; generátor sa môže '
+                                       'vyčerpať.',
+                               'mode': 'syntax'},
+                              {'title': 'Generator expression',
+                               'prompt': 'Vytvor generátorový výraz pre druhé mocniny.',
+                               'example': 'squares = (x * x for x in range(4))\nprint(list(squares))',
+                               'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo '
+                                       'fungujú. `yield` nie je to isté ako `return`; generátor sa môže '
+                                       'vyčerpať.',
+                               'mode': 'syntax'},
+                              {'title': 'Challenge: Iterator',
+                               'prompt': 'Rozšírenie úlohy: Vytvor iterátor zo zoznamu a vyber prvý prvok. '
+                                         'Zmeň aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, '
+                                         'ktorý vysvetlí výsledok.',
+                               'example': 'items = iter([10, 20, 30])\n'
+                                          'print(next(items))\n'
+                                          '# Explain your modification here',
+                               'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                       'výsledok.',
+                               'mode': 'syntax'},
+                              {'title': 'Challenge: Generator',
+                               'prompt': 'Rozšírenie úlohy: Vytvor generátor, ktorý vydá dve čísla. Zmeň '
+                                         'aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý '
+                                         'vysvetlí výsledok.',
+                               'example': 'def numbers():\n'
+                                          '    yield 1\n'
+                                          '    yield 2\n'
+                                          '# Explain your modification here',
+                               'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                       'výsledok.',
+                               'mode': 'syntax'},
+                              {'title': 'Challenge: Generator loop',
+                               'prompt': 'Rozšírenie úlohy: Prejdi generátor pomocou for. Zmeň aspoň jednu '
+                                         'vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                         'výsledok.',
+                               'example': 'def numbers():\n'
+                                          '    yield 1\n'
+                                          '    yield 2\n'
+                                          'for n in numbers():\n'
+                                          '    print(n)\n'
+                                          '# Explain your modification here',
+                               'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                       'výsledok.',
+                               'mode': 'syntax'},
+                              {'title': 'Challenge: Generator expression',
+                               'prompt': 'Rozšírenie úlohy: Vytvor generátorový výraz pre druhé mocniny. '
+                                         'Zmeň aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, '
+                                         'ktorý vysvetlí výsledok.',
+                               'example': 'squares = (x * x for x in range(4))\n'
+                                          'print(list(squares))\n'
+                                          '# Explain your modification here',
+                               'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                       'výsledok.',
+                               'mode': 'syntax'}],
+ 'Modules and Imports': [{'title': 'Import math',
+                          'prompt': 'Načítaj modul math a vypíš pi.',
+                          'example': 'import math\nprint(math.pi)',
+                          'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                  'Nepoužívaj názvy súborov `math.py` alebo `random.py`, ktoré tienia '
+                                  'štandardné moduly.',
+                          'mode': 'syntax'},
+                         {'title': 'From import',
+                          'prompt': 'Importuj sqrt z math a vypočítaj odmocninu 81.',
+                          'example': 'from math import sqrt\nprint(sqrt(81))',
+                          'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                  'Nepoužívaj názvy súborov `math.py` alebo `random.py`, ktoré tienia '
+                                  'štandardné moduly.',
+                          'mode': 'syntax'},
+                         {'title': 'Alias',
+                          'prompt': 'Použi alias pre modul math.',
+                          'example': 'import math as m\nprint(m.sqrt(16))',
+                          'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                  'Nepoužívaj názvy súborov `math.py` alebo `random.py`, ktoré tienia '
+                                  'štandardné moduly.',
+                          'mode': 'syntax'},
+                         {'title': 'Random module',
+                          'prompt': 'Použi randint na celé náhodné číslo od 1 do 6.',
+                          'example': 'import random\nprint(random.randint(1, 6))',
+                          'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                  'Nepoužívaj názvy súborov `math.py` alebo `random.py`, ktoré tienia '
+                                  'štandardné moduly.',
+                          'mode': 'syntax'},
+                         {'title': 'Challenge: Import math',
+                          'prompt': 'Rozšírenie úlohy: Načítaj modul math a vypíš pi. Zmeň aspoň jednu '
+                                    'vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                          'example': 'import math\nprint(math.pi)\n# Explain your modification here',
+                          'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                  'výsledok.',
+                          'mode': 'syntax'},
+                         {'title': 'Challenge: From import',
+                          'prompt': 'Rozšírenie úlohy: Importuj sqrt z math a vypočítaj odmocninu 81. Zmeň '
+                                    'aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý '
+                                    'vysvetlí výsledok.',
+                          'example': 'from math import sqrt\n'
+                                     'print(sqrt(81))\n'
+                                     '# Explain your modification here',
+                          'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                  'výsledok.',
+                          'mode': 'syntax'},
+                         {'title': 'Challenge: Alias',
+                          'prompt': 'Rozšírenie úlohy: Použi alias pre modul math. Zmeň aspoň jednu vstupnú '
+                                    'hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                          'example': 'import math as m\nprint(m.sqrt(16))\n# Explain your modification here',
+                          'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                  'výsledok.',
+                          'mode': 'syntax'},
+                         {'title': 'Challenge: Random module',
+                          'prompt': 'Rozšírenie úlohy: Použi randint na celé náhodné číslo od 1 do 6. Zmeň '
+                                    'aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý '
+                                    'vysvetlí výsledok.',
+                          'example': 'import random\n'
+                                     'print(random.randint(1, 6))\n'
+                                     '# Explain your modification here',
+                          'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                  'výsledok.',
+                          'mode': 'syntax'}],
+ 'OOP: Single Inheritance': [{'title': 'Base class',
+                              'prompt': 'Definuj triedu Animal s metódou speak.',
+                              'example': 'class Animal:\n    def speak(self):\n        return "sound"',
+                              'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                      'Ak prepíšeš `__init__`, rodičovský konštruktor sa nezavolá '
+                                      'automaticky.',
+                              'mode': 'syntax'},
+                             {'title': 'Child class',
+                              'prompt': 'Vytvor triedu Dog, ktorá dedí z Animal.',
+                              'example': 'class Animal:\n    pass\nclass Dog(Animal):\n    pass',
+                              'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                      'Ak prepíšeš `__init__`, rodičovský konštruktor sa nezavolá '
+                                      'automaticky.',
+                              'mode': 'syntax'},
+                             {'title': 'Override',
+                              'prompt': 'V podtriede prepíš metódu speak.',
+                              'example': 'class Animal:\n'
+                                         '    def speak(self):\n'
+                                         '        return "sound"\n'
+                                         'class Dog(Animal):\n'
+                                         '    def speak(self):\n'
+                                         '        return "woof"',
+                              'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                      'Ak prepíšeš `__init__`, rodičovský konštruktor sa nezavolá '
+                                      'automaticky.',
+                              'mode': 'syntax'},
+                             {'title': 'Super call',
+                              'prompt': 'Použi super().__init__ v konštruktore podtriedy.',
+                              'example': 'class Animal:\n'
+                                         '    def __init__(self, name):\n'
+                                         '        self.name = name\n'
+                                         'class Dog(Animal):\n'
+                                         '    def __init__(self, name):\n'
+                                         '        super().__init__(name)',
+                              'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                      'Ak prepíšeš `__init__`, rodičovský konštruktor sa nezavolá '
+                                      'automaticky.',
+                              'mode': 'syntax'},
+                             {'title': 'Challenge: Base class',
+                              'prompt': 'Rozšírenie úlohy: Definuj triedu Animal s metódou speak. Zmeň aspoň '
+                                        'jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                        'výsledok.',
+                              'example': 'class Animal:\n'
+                                         '    def speak(self):\n'
+                                         '        return "sound"\n'
+                                         '# Explain your modification here',
+                              'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                      'výsledok.',
+                              'mode': 'syntax'},
+                             {'title': 'Challenge: Child class',
+                              'prompt': 'Rozšírenie úlohy: Vytvor triedu Dog, ktorá dedí z Animal. Zmeň '
+                                        'aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý '
+                                        'vysvetlí výsledok.',
+                              'example': 'class Animal:\n'
+                                         '    pass\n'
+                                         'class Dog(Animal):\n'
+                                         '    pass\n'
+                                         '# Explain your modification here',
+                              'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                      'výsledok.',
+                              'mode': 'syntax'},
+                             {'title': 'Challenge: Override',
+                              'prompt': 'Rozšírenie úlohy: V podtriede prepíš metódu speak. Zmeň aspoň jednu '
+                                        'vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                        'výsledok.',
+                              'example': 'class Animal:\n'
+                                         '    def speak(self):\n'
+                                         '        return "sound"\n'
+                                         'class Dog(Animal):\n'
+                                         '    def speak(self):\n'
+                                         '        return "woof"\n'
+                                         '# Explain your modification here',
+                              'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                      'výsledok.',
+                              'mode': 'syntax'},
+                             {'title': 'Challenge: Super call',
+                              'prompt': 'Rozšírenie úlohy: Použi super().__init__ v konštruktore podtriedy. '
+                                        'Zmeň aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, '
+                                        'ktorý vysvetlí výsledok.',
+                              'example': 'class Animal:\n'
+                                         '    def __init__(self, name):\n'
+                                         '        self.name = name\n'
+                                         'class Dog(Animal):\n'
+                                         '    def __init__(self, name):\n'
+                                         '        super().__init__(name)\n'
+                                         '# Explain your modification here',
+                              'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                      'výsledok.',
+                              'mode': 'syntax'}],
+ 'OOP: Multiple Inheritance': [{'title': 'Two parents',
+                                'prompt': 'Vytvor triedy Flyer, Swimmer a Duck, ktorá dedí z oboch.',
+                                'example': 'class Flyer:\n'
+                                           '    pass\n'
+                                           'class Swimmer:\n'
+                                           '    pass\n'
+                                           'class Duck(Flyer, Swimmer):\n'
+                                           '    pass',
+                                'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo '
+                                        'fungujú. Poradie rodičov v zátvorkách môže ovplyvniť vybranú '
+                                        'metódu.',
+                                'mode': 'syntax'},
+                               {'title': 'Inherited method',
+                                'prompt': 'Použi metódu jedného z rodičov.',
+                                'example': 'class Flyer:\n'
+                                           '    def fly(self):\n'
+                                           '        return "flying"\n'
+                                           'class Duck(Flyer):\n'
+                                           '    pass',
+                                'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo '
+                                        'fungujú. Poradie rodičov v zátvorkách môže ovplyvniť vybranú '
+                                        'metódu.',
+                                'mode': 'syntax'},
+                               {'title': 'MRO',
+                                'prompt': 'Vypíš poradie vyhľadávania metód triedy.',
+                                'example': 'class A:\n'
+                                           '    pass\n'
+                                           'class B:\n'
+                                           '    pass\n'
+                                           'class C(A, B):\n'
+                                           '    pass\n'
+                                           'print(C.__mro__)',
+                                'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo '
+                                        'fungujú. Poradie rodičov v zátvorkách môže ovplyvniť vybranú '
+                                        'metódu.',
+                                'mode': 'syntax'},
+                               {'title': 'Mixins',
+                                'prompt': 'Vytvor jednoduchý mixin s metódou info.',
+                                'example': 'class InfoMixin:\n'
+                                           '    def info(self):\n'
+                                           '        return "info"\n'
+                                           'class Item(InfoMixin):\n'
+                                           '    pass',
+                                'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo '
+                                        'fungujú. Poradie rodičov v zátvorkách môže ovplyvniť vybranú '
+                                        'metódu.',
+                                'mode': 'syntax'},
+                               {'title': 'Challenge: Two parents',
+                                'prompt': 'Rozšírenie úlohy: Vytvor triedy Flyer, Swimmer a Duck, ktorá dedí '
+                                          'z oboch. Zmeň aspoň jednu vstupnú hodnotu alebo názov a doplň '
+                                          'komentár, ktorý vysvetlí výsledok.',
+                                'example': 'class Flyer:\n'
+                                           '    pass\n'
+                                           'class Swimmer:\n'
+                                           '    pass\n'
+                                           'class Duck(Flyer, Swimmer):\n'
+                                           '    pass\n'
+                                           '# Explain your modification here',
+                                'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                        'výsledok.',
+                                'mode': 'syntax'},
+                               {'title': 'Challenge: Inherited method',
+                                'prompt': 'Rozšírenie úlohy: Použi metódu jedného z rodičov. Zmeň aspoň '
+                                          'jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý '
+                                          'vysvetlí výsledok.',
+                                'example': 'class Flyer:\n'
+                                           '    def fly(self):\n'
+                                           '        return "flying"\n'
+                                           'class Duck(Flyer):\n'
+                                           '    pass\n'
+                                           '# Explain your modification here',
+                                'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                        'výsledok.',
+                                'mode': 'syntax'},
+                               {'title': 'Challenge: MRO',
+                                'prompt': 'Rozšírenie úlohy: Vypíš poradie vyhľadávania metód triedy. Zmeň '
+                                          'aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý '
+                                          'vysvetlí výsledok.',
+                                'example': 'class A:\n'
+                                           '    pass\n'
+                                           'class B:\n'
+                                           '    pass\n'
+                                           'class C(A, B):\n'
+                                           '    pass\n'
+                                           'print(C.__mro__)\n'
+                                           '# Explain your modification here',
+                                'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                        'výsledok.',
+                                'mode': 'syntax'},
+                               {'title': 'Challenge: Mixins',
+                                'prompt': 'Rozšírenie úlohy: Vytvor jednoduchý mixin s metódou info. Zmeň '
+                                          'aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý '
+                                          'vysvetlí výsledok.',
+                                'example': 'class InfoMixin:\n'
+                                           '    def info(self):\n'
+                                           '        return "info"\n'
+                                           'class Item(InfoMixin):\n'
+                                           '    pass\n'
+                                           '# Explain your modification here',
+                                'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                        'výsledok.',
+                                'mode': 'syntax'}],
+ 'OOP: Encapsulation, Polymorphism, Abstraction': [{'title': 'Encapsulation',
+                                                    'prompt': 'Vytvor triedu s interným atribútom _balance.',
+                                                    'example': 'class Account:\n'
+                                                               '    def __init__(self):\n'
+                                                               '        self._balance = 0',
+                                                    'hint': 'Pozri si ukážku, rozober jednotlivé riadky a '
+                                                            'vysvetli, prečo fungujú. Jedno podčiarkovník je '
+                                                            'konvencia, nie bezpečnostná ochrana súkromia.',
+                                                    'mode': 'syntax'},
+                                                   {'title': 'Polymorphism',
+                                                    'prompt': 'Vytvor dve triedy s rovnakou metódou speak.',
+                                                    'example': 'class Dog:\n'
+                                                               '    def speak(self):\n'
+                                                               '        return "woof"\n'
+                                                               'class Cat:\n'
+                                                               '    def speak(self):\n'
+                                                               '        return "meow"',
+                                                    'hint': 'Pozri si ukážku, rozober jednotlivé riadky a '
+                                                            'vysvetli, prečo fungujú. Jedno podčiarkovník je '
+                                                            'konvencia, nie bezpečnostná ochrana súkromia.',
+                                                    'mode': 'syntax'},
+                                                   {'title': 'Common interface',
+                                                    'prompt': 'Prejdi objekty rôznych tried a zavolaj speak.',
+                                                    'example': 'class Dog:\n'
+                                                               '    def speak(self):\n'
+                                                               '        return "woof"\n'
+                                                               'class Cat:\n'
+                                                               '    def speak(self):\n'
+                                                               '        return "meow"\n'
+                                                               'for animal in [Dog(), Cat()]:\n'
+                                                               '    print(animal.speak())',
+                                                    'hint': 'Pozri si ukážku, rozober jednotlivé riadky a '
+                                                            'vysvetli, prečo fungujú. Jedno podčiarkovník je '
+                                                            'konvencia, nie bezpečnostná ochrana súkromia.',
+                                                    'mode': 'syntax'},
+                                                   {'title': 'Abstract class',
+                                                    'prompt': 'Vytvor abstraktnú triedu Shape s metódou '
+                                                              'area.',
+                                                    'example': 'from abc import ABC, abstractmethod\n'
+                                                               'class Shape(ABC):\n'
+                                                               '    @abstractmethod\n'
+                                                               '    def area(self):\n'
+                                                               '        pass',
+                                                    'hint': 'Pozri si ukážku, rozober jednotlivé riadky a '
+                                                            'vysvetli, prečo fungujú. Jedno podčiarkovník je '
+                                                            'konvencia, nie bezpečnostná ochrana súkromia.',
+                                                    'mode': 'syntax'},
+                                                   {'title': 'Challenge: Encapsulation',
+                                                    'prompt': 'Rozšírenie úlohy: Vytvor triedu s interným '
+                                                              'atribútom _balance. Zmeň aspoň jednu vstupnú '
+                                                              'hodnotu alebo názov a doplň komentár, ktorý '
+                                                              'vysvetlí výsledok.',
+                                                    'example': 'class Account:\n'
+                                                               '    def __init__(self):\n'
+                                                               '        self._balance = 0\n'
+                                                               '# Explain your modification here',
+                                                    'hint': 'Najprv uprav hodnotu alebo názov a potom '
+                                                            'komentárom opíš očakávaný výsledok.',
+                                                    'mode': 'syntax'},
+                                                   {'title': 'Challenge: Polymorphism',
+                                                    'prompt': 'Rozšírenie úlohy: Vytvor dve triedy s '
+                                                              'rovnakou metódou speak. Zmeň aspoň jednu '
+                                                              'vstupnú hodnotu alebo názov a doplň komentár, '
+                                                              'ktorý vysvetlí výsledok.',
+                                                    'example': 'class Dog:\n'
+                                                               '    def speak(self):\n'
+                                                               '        return "woof"\n'
+                                                               'class Cat:\n'
+                                                               '    def speak(self):\n'
+                                                               '        return "meow"\n'
+                                                               '# Explain your modification here',
+                                                    'hint': 'Najprv uprav hodnotu alebo názov a potom '
+                                                            'komentárom opíš očakávaný výsledok.',
+                                                    'mode': 'syntax'},
+                                                   {'title': 'Challenge: Common interface',
+                                                    'prompt': 'Rozšírenie úlohy: Prejdi objekty rôznych '
+                                                              'tried a zavolaj speak. Zmeň aspoň jednu '
+                                                              'vstupnú hodnotu alebo názov a doplň komentár, '
+                                                              'ktorý vysvetlí výsledok.',
+                                                    'example': 'class Dog:\n'
+                                                               '    def speak(self):\n'
+                                                               '        return "woof"\n'
+                                                               'class Cat:\n'
+                                                               '    def speak(self):\n'
+                                                               '        return "meow"\n'
+                                                               'for animal in [Dog(), Cat()]:\n'
+                                                               '    print(animal.speak())\n'
+                                                               '# Explain your modification here',
+                                                    'hint': 'Najprv uprav hodnotu alebo názov a potom '
+                                                            'komentárom opíš očakávaný výsledok.',
+                                                    'mode': 'syntax'},
+                                                   {'title': 'Challenge: Abstract class',
+                                                    'prompt': 'Rozšírenie úlohy: Vytvor abstraktnú triedu '
+                                                              'Shape s metódou area. Zmeň aspoň jednu '
+                                                              'vstupnú hodnotu alebo názov a doplň komentár, '
+                                                              'ktorý vysvetlí výsledok.',
+                                                    'example': 'from abc import ABC, abstractmethod\n'
+                                                               'class Shape(ABC):\n'
+                                                               '    @abstractmethod\n'
+                                                               '    def area(self):\n'
+                                                               '        pass\n'
+                                                               '# Explain your modification here',
+                                                    'hint': 'Najprv uprav hodnotu alebo názov a potom '
+                                                            'komentárom opíš očakávaný výsledok.',
+                                                    'mode': 'syntax'}],
+ 'Properties and Descriptors': [{'title': 'Property getter',
+                                 'prompt': 'Vytvor property na čítanie veku.',
+                                 'example': 'class Person:\n'
+                                            '    def __init__(self, age):\n'
+                                            '        self._age = age\n'
+                                            '    @property\n'
+                                            '    def age(self):\n'
+                                            '        return self._age',
+                                 'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo '
+                                         'fungujú. Vo vnútri property používaj napr. `_age`, inak môže '
+                                         'vzniknúť nekonečná rekurzia.',
+                                 'mode': 'syntax'},
+                                {'title': 'Property setter',
+                                 'prompt': 'Pridaj setter, ktorý odmietne záporný vek.',
+                                 'example': 'class Person:\n'
+                                            '    @property\n'
+                                            '    def age(self):\n'
+                                            '        return self._age\n'
+                                            '    @age.setter\n'
+                                            '    def age(self, value):\n'
+                                            '        if value < 0:\n'
+                                            '            raise ValueError("age")\n'
+                                            '        self._age = value',
+                                 'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo '
+                                         'fungujú. Vo vnútri property používaj napr. `_age`, inak môže '
+                                         'vzniknúť nekonečná rekurzia.',
+                                 'mode': 'syntax'},
+                                {'title': 'Read-only property',
+                                 'prompt': 'Vytvor vypočítanú vlastnosť area.',
+                                 'example': 'class Square:\n'
+                                            '    def __init__(self, side):\n'
+                                            '        self.side = side\n'
+                                            '    @property\n'
+                                            '    def area(self):\n'
+                                            '        return self.side * self.side',
+                                 'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo '
+                                         'fungujú. Vo vnútri property používaj napr. `_age`, inak môže '
+                                         'vzniknúť nekonečná rekurzia.',
+                                 'mode': 'syntax'},
+                                {'title': 'Descriptor',
+                                 'prompt': 'Vytvor deskriptor s metódou __get__.',
+                                 'example': 'class Constant:\n'
+                                            '    def __get__(self, obj, owner):\n'
+                                            '        return 42',
+                                 'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo '
+                                         'fungujú. Vo vnútri property používaj napr. `_age`, inak môže '
+                                         'vzniknúť nekonečná rekurzia.',
+                                 'mode': 'syntax'},
+                                {'title': 'Challenge: Property getter',
+                                 'prompt': 'Rozšírenie úlohy: Vytvor property na čítanie veku. Zmeň aspoň '
+                                           'jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý '
+                                           'vysvetlí výsledok.',
+                                 'example': 'class Person:\n'
+                                            '    def __init__(self, age):\n'
+                                            '        self._age = age\n'
+                                            '    @property\n'
+                                            '    def age(self):\n'
+                                            '        return self._age\n'
+                                            '# Explain your modification here',
+                                 'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                         'výsledok.',
+                                 'mode': 'syntax'},
+                                {'title': 'Challenge: Property setter',
+                                 'prompt': 'Rozšírenie úlohy: Pridaj setter, ktorý odmietne záporný vek. '
+                                           'Zmeň aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, '
+                                           'ktorý vysvetlí výsledok.',
+                                 'example': 'class Person:\n'
+                                            '    @property\n'
+                                            '    def age(self):\n'
+                                            '        return self._age\n'
+                                            '    @age.setter\n'
+                                            '    def age(self, value):\n'
+                                            '        if value < 0:\n'
+                                            '            raise ValueError("age")\n'
+                                            '        self._age = value\n'
+                                            '# Explain your modification here',
+                                 'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                         'výsledok.',
+                                 'mode': 'syntax'},
+                                {'title': 'Challenge: Read-only property',
+                                 'prompt': 'Rozšírenie úlohy: Vytvor vypočítanú vlastnosť area. Zmeň aspoň '
+                                           'jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý '
+                                           'vysvetlí výsledok.',
+                                 'example': 'class Square:\n'
+                                            '    def __init__(self, side):\n'
+                                            '        self.side = side\n'
+                                            '    @property\n'
+                                            '    def area(self):\n'
+                                            '        return self.side * self.side\n'
+                                            '# Explain your modification here',
+                                 'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                         'výsledok.',
+                                 'mode': 'syntax'},
+                                {'title': 'Challenge: Descriptor',
+                                 'prompt': 'Rozšírenie úlohy: Vytvor deskriptor s metódou __get__. Zmeň '
+                                           'aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý '
+                                           'vysvetlí výsledok.',
+                                 'example': 'class Constant:\n'
+                                            '    def __get__(self, obj, owner):\n'
+                                            '        return 42\n'
+                                            '# Explain your modification here',
+                                 'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                         'výsledok.',
+                                 'mode': 'syntax'}],
+ 'Exception Handling': [{'title': 'Try except',
+                         'prompt': 'Zachyť ValueError pri int("abc").',
+                         'example': 'try:\n'
+                                    '    value = int("abc")\n'
+                                    'except ValueError:\n'
+                                    '    print("Invalid number")',
+                         'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                 'Nezachytávaj bezdôvodne všetky chyby holým `except:`.',
+                         'mode': 'syntax'},
+                        {'title': 'Zero division',
+                         'prompt': 'Zachyť ZeroDivisionError.',
+                         'example': 'try:\n'
+                                    '    print(10 / 0)\n'
+                                    'except ZeroDivisionError:\n'
+                                    '    print("Cannot divide by zero")',
+                         'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                 'Nezachytávaj bezdôvodne všetky chyby holým `except:`.',
+                         'mode': 'syntax'},
+                        {'title': 'Else block',
+                         'prompt': 'Použi else pri úspešnom prevode.',
+                         'example': 'try:\n'
+                                    '    n = int("12")\n'
+                                    'except ValueError:\n'
+                                    '    print("Error")\n'
+                                    'else:\n'
+                                    '    print(n)',
+                         'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                 'Nezachytávaj bezdôvodne všetky chyby holým `except:`.',
+                         'mode': 'syntax'},
+                        {'title': 'Finally block',
+                         'prompt': 'Použi finally na záverečnú správu.',
+                         'example': 'try:\n    print("work")\nfinally:\n    print("done")',
+                         'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                 'Nezachytávaj bezdôvodne všetky chyby holým `except:`.',
+                         'mode': 'syntax'},
+                        {'title': 'Challenge: Try except',
+                         'prompt': 'Rozšírenie úlohy: Zachyť ValueError pri int("abc"). Zmeň aspoň jednu '
+                                   'vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                         'example': 'try:\n'
+                                    '    value = int("abc")\n'
+                                    'except ValueError:\n'
+                                    '    print("Invalid number")\n'
+                                    '# Explain your modification here',
+                         'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                 'výsledok.',
+                         'mode': 'syntax'},
+                        {'title': 'Challenge: Zero division',
+                         'prompt': 'Rozšírenie úlohy: Zachyť ZeroDivisionError. Zmeň aspoň jednu vstupnú '
+                                   'hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                         'example': 'try:\n'
+                                    '    print(10 / 0)\n'
+                                    'except ZeroDivisionError:\n'
+                                    '    print("Cannot divide by zero")\n'
+                                    '# Explain your modification here',
+                         'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                 'výsledok.',
+                         'mode': 'syntax'},
+                        {'title': 'Challenge: Else block',
+                         'prompt': 'Rozšírenie úlohy: Použi else pri úspešnom prevode. Zmeň aspoň jednu '
+                                   'vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                         'example': 'try:\n'
+                                    '    n = int("12")\n'
+                                    'except ValueError:\n'
+                                    '    print("Error")\n'
+                                    'else:\n'
+                                    '    print(n)\n'
+                                    '# Explain your modification here',
+                         'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                 'výsledok.',
+                         'mode': 'syntax'},
+                        {'title': 'Challenge: Finally block',
+                         'prompt': 'Rozšírenie úlohy: Použi finally na záverečnú správu. Zmeň aspoň jednu '
+                                   'vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                         'example': 'try:\n'
+                                    '    print("work")\n'
+                                    'finally:\n'
+                                    '    print("done")\n'
+                                    '# Explain your modification here',
+                         'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                 'výsledok.',
+                         'mode': 'syntax'}],
+ 'Exceptions in Details': [{'title': 'Raise',
+                            'prompt': 'Vyvolaj ValueError pri zápornom veku.',
+                            'example': 'age = -1\nif age < 0:\n    raise ValueError("negative age")',
+                            'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                    'Vyvolávaj konkrétne výnimky a poskytuj užitočné správy.',
+                            'mode': 'syntax'},
+                           {'title': 'Custom exception',
+                            'prompt': 'Vytvor vlastnú triedu výnimky.',
+                            'example': 'class InvalidScoreError(Exception):\n    pass',
+                            'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                    'Vyvolávaj konkrétne výnimky a poskytuj užitočné správy.',
+                            'mode': 'syntax'},
+                           {'title': 'Exception message',
+                            'prompt': 'Zachyť výnimku a vypíš jej správu.',
+                            'example': 'try:\n    int("oops")\nexcept ValueError as err:\n    print(err)',
+                            'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                    'Vyvolávaj konkrétne výnimky a poskytuj užitočné správy.',
+                            'mode': 'syntax'},
+                           {'title': 'Multiple exceptions',
+                            'prompt': 'Zachyť ValueError aj TypeError.',
+                            'example': 'try:\n'
+                                       '    number = int("oops")\n'
+                                       'except (ValueError, TypeError):\n'
+                                       '    print("Invalid input")',
+                            'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                    'Vyvolávaj konkrétne výnimky a poskytuj užitočné správy.',
+                            'mode': 'syntax'},
+                           {'title': 'Challenge: Raise',
+                            'prompt': 'Rozšírenie úlohy: Vyvolaj ValueError pri zápornom veku. Zmeň aspoň '
+                                      'jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                      'výsledok.',
+                            'example': 'age = -1\n'
+                                       'if age < 0:\n'
+                                       '    raise ValueError("negative age")\n'
+                                       '# Explain your modification here',
+                            'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                    'výsledok.',
+                            'mode': 'syntax'},
+                           {'title': 'Challenge: Custom exception',
+                            'prompt': 'Rozšírenie úlohy: Vytvor vlastnú triedu výnimky. Zmeň aspoň jednu '
+                                      'vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                      'výsledok.',
+                            'example': 'class InvalidScoreError(Exception):\n'
+                                       '    pass\n'
+                                       '# Explain your modification here',
+                            'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                    'výsledok.',
+                            'mode': 'syntax'},
+                           {'title': 'Challenge: Exception message',
+                            'prompt': 'Rozšírenie úlohy: Zachyť výnimku a vypíš jej správu. Zmeň aspoň jednu '
+                                      'vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                      'výsledok.',
+                            'example': 'try:\n'
+                                       '    int("oops")\n'
+                                       'except ValueError as err:\n'
+                                       '    print(err)\n'
+                                       '# Explain your modification here',
+                            'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                    'výsledok.',
+                            'mode': 'syntax'},
+                           {'title': 'Challenge: Multiple exceptions',
+                            'prompt': 'Rozšírenie úlohy: Zachyť ValueError aj TypeError. Zmeň aspoň jednu '
+                                      'vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                      'výsledok.',
+                            'example': 'try:\n'
+                                       '    number = int("oops")\n'
+                                       'except (ValueError, TypeError):\n'
+                                       '    print("Invalid input")\n'
+                                       '# Explain your modification here',
+                            'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                    'výsledok.',
+                            'mode': 'syntax'}],
+ 'File Handling': [{'title': 'Read file',
+                    'prompt': 'Napíš ukážku bezpečného čítania textového súboru.',
+                    'example': 'with open("notes.txt", "r", encoding="utf-8") as f:\n    text = f.read()',
+                    'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. `w` '
+                            'prepíše existujúci obsah; online náhľad nepovoľuje skutočnú prácu so súbormi.',
+                    'mode': 'syntax'},
+                   {'title': 'Write file',
+                    'prompt': 'Napíš kód, ktorý zapíše text do súboru.',
+                    'example': 'with open("notes.txt", "w", encoding="utf-8") as f:\n    f.write("Hello")',
+                    'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. `w` '
+                            'prepíše existujúci obsah; online náhľad nepovoľuje skutočnú prácu so súbormi.',
+                    'mode': 'syntax'},
+                   {'title': 'Append file',
+                    'prompt': 'Napíš kód na pridanie riadku na koniec súboru.',
+                    'example': 'with open("notes.txt", "a", encoding="utf-8") as f:\n'
+                               '    f.write("New line\\n")',
+                    'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. `w` '
+                            'prepíše existujúci obsah; online náhľad nepovoľuje skutočnú prácu so súbormi.',
+                    'mode': 'syntax'},
+                   {'title': 'Read lines',
+                    'prompt': 'Napíš cyklus, ktorý spracuje riadky súboru.',
+                    'example': 'with open("notes.txt", encoding="utf-8") as f:\n'
+                               '    for line in f:\n'
+                               '        print(line.strip())',
+                    'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. `w` '
+                            'prepíše existujúci obsah; online náhľad nepovoľuje skutočnú prácu so súbormi.',
+                    'mode': 'syntax'},
+                   {'title': 'Challenge: Read file',
+                    'prompt': 'Rozšírenie úlohy: Napíš ukážku bezpečného čítania textového súboru. Zmeň '
+                              'aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                              'výsledok.',
+                    'example': 'with open("notes.txt", "r", encoding="utf-8") as f:\n'
+                               '    text = f.read()\n'
+                               '# Explain your modification here',
+                    'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+                    'mode': 'syntax'},
+                   {'title': 'Challenge: Write file',
+                    'prompt': 'Rozšírenie úlohy: Napíš kód, ktorý zapíše text do súboru. Zmeň aspoň jednu '
+                              'vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                    'example': 'with open("notes.txt", "w", encoding="utf-8") as f:\n'
+                               '    f.write("Hello")\n'
+                               '# Explain your modification here',
+                    'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+                    'mode': 'syntax'},
+                   {'title': 'Challenge: Append file',
+                    'prompt': 'Rozšírenie úlohy: Napíš kód na pridanie riadku na koniec súboru. Zmeň aspoň '
+                              'jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                    'example': 'with open("notes.txt", "a", encoding="utf-8") as f:\n'
+                               '    f.write("New line\\n")\n'
+                               '# Explain your modification here',
+                    'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+                    'mode': 'syntax'},
+                   {'title': 'Challenge: Read lines',
+                    'prompt': 'Rozšírenie úlohy: Napíš cyklus, ktorý spracuje riadky súboru. Zmeň aspoň '
+                              'jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                    'example': 'with open("notes.txt", encoding="utf-8") as f:\n'
+                               '    for line in f:\n'
+                               '        print(line.strip())\n'
+                               '# Explain your modification here',
+                    'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+                    'mode': 'syntax'}],
+ 'Memory Management': [{'title': 'References',
+                        'prompt': 'Ukáž dve premenné odkazujúce na ten istý zoznam.',
+                        'example': 'a = [1, 2]\nb = a\nprint(a is b)',
+                        'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. `del` '
+                                'nie je príkaz na okamžité uvoľnenie všetkej pamäte objektu.',
+                        'mode': 'syntax'},
+                       {'title': 'Copy',
+                        'prompt': 'Vytvor nezávislú plytkú kópiu zoznamu.',
+                        'example': 'a = [1, 2]\nb = a.copy()\nprint(a is b)',
+                        'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. `del` '
+                                'nie je príkaz na okamžité uvoľnenie všetkej pamäte objektu.',
+                        'mode': 'syntax'},
+                       {'title': 'Delete name',
+                        'prompt': 'Vytvor premennú a potom odstráň jej meno cez del.',
+                        'example': 'x = [1, 2]\ndel x',
+                        'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. `del` '
+                                'nie je príkaz na okamžité uvoľnenie všetkej pamäte objektu.',
+                        'mode': 'syntax'},
+                       {'title': 'Garbage collection',
+                        'prompt': 'Importuj gc a zisti, či je automatický zber povolený.',
+                        'example': 'import gc\nprint(gc.isenabled())',
+                        'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. `del` '
+                                'nie je príkaz na okamžité uvoľnenie všetkej pamäte objektu.',
+                        'mode': 'syntax'},
+                       {'title': 'Challenge: References',
+                        'prompt': 'Rozšírenie úlohy: Ukáž dve premenné odkazujúce na ten istý zoznam. Zmeň '
+                                  'aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                  'výsledok.',
+                        'example': 'a = [1, 2]\nb = a\nprint(a is b)\n# Explain your modification here',
+                        'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                'výsledok.',
+                        'mode': 'syntax'},
+                       {'title': 'Challenge: Copy',
+                        'prompt': 'Rozšírenie úlohy: Vytvor nezávislú plytkú kópiu zoznamu. Zmeň aspoň jednu '
+                                  'vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                        'example': 'a = [1, 2]\n'
+                                   'b = a.copy()\n'
+                                   'print(a is b)\n'
+                                   '# Explain your modification here',
+                        'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                'výsledok.',
+                        'mode': 'syntax'},
+                       {'title': 'Challenge: Delete name',
+                        'prompt': 'Rozšírenie úlohy: Vytvor premennú a potom odstráň jej meno cez del. Zmeň '
+                                  'aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                  'výsledok.',
+                        'example': 'x = [1, 2]\ndel x\n# Explain your modification here',
+                        'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                'výsledok.',
+                        'mode': 'syntax'},
+                       {'title': 'Challenge: Garbage collection',
+                        'prompt': 'Rozšírenie úlohy: Importuj gc a zisti, či je automatický zber povolený. '
+                                  'Zmeň aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý '
+                                  'vysvetlí výsledok.',
+                        'example': 'import gc\nprint(gc.isenabled())\n# Explain your modification here',
+                        'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                'výsledok.',
+                        'mode': 'syntax'}],
+ 'Testing': [{'title': 'Basic assert',
+              'prompt': 'Otestuj súčet 2+3 pomocou assert.',
+              'example': 'assert 2 + 3 == 5',
+              'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Test pre jeden '
+                      'vstup nedokazuje správnosť pre všetky vstupy.',
+              'mode': 'syntax'},
+             {'title': 'Function test',
+              'prompt': 'Napíš funkciu square a otestuj ju.',
+              'example': 'def square(n):\n    return n * n\nassert square(4) == 16',
+              'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Test pre jeden '
+                      'vstup nedokazuje správnosť pre všetky vstupy.',
+              'mode': 'syntax'},
+             {'title': 'Boundary test',
+              'prompt': 'Otestuj funkciu square pre nulu.',
+              'example': 'def square(n):\n    return n * n\nassert square(0) == 0',
+              'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Test pre jeden '
+                      'vstup nedokazuje správnosť pre všetky vstupy.',
+              'mode': 'syntax'},
+             {'title': 'Multiple tests',
+              'prompt': 'Napíš aspoň tri testy funkcie add.',
+              'example': 'def add(a, b):\n'
+                         '    return a + b\n'
+                         'assert add(1, 2) == 3\n'
+                         'assert add(0, 0) == 0\n'
+                         'assert add(-1, 1) == 0',
+              'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Test pre jeden '
+                      'vstup nedokazuje správnosť pre všetky vstupy.',
+              'mode': 'syntax'},
+             {'title': 'Challenge: Basic assert',
+              'prompt': 'Rozšírenie úlohy: Otestuj súčet 2+3 pomocou assert. Zmeň aspoň jednu vstupnú '
+                        'hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+              'example': 'assert 2 + 3 == 5\n# Explain your modification here',
+              'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+              'mode': 'syntax'},
+             {'title': 'Challenge: Function test',
+              'prompt': 'Rozšírenie úlohy: Napíš funkciu square a otestuj ju. Zmeň aspoň jednu vstupnú '
+                        'hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+              'example': 'def square(n):\n'
+                         '    return n * n\n'
+                         'assert square(4) == 16\n'
+                         '# Explain your modification here',
+              'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+              'mode': 'syntax'},
+             {'title': 'Challenge: Boundary test',
+              'prompt': 'Rozšírenie úlohy: Otestuj funkciu square pre nulu. Zmeň aspoň jednu vstupnú hodnotu '
+                        'alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+              'example': 'def square(n):\n'
+                         '    return n * n\n'
+                         'assert square(0) == 0\n'
+                         '# Explain your modification here',
+              'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+              'mode': 'syntax'},
+             {'title': 'Challenge: Multiple tests',
+              'prompt': 'Rozšírenie úlohy: Napíš aspoň tri testy funkcie add. Zmeň aspoň jednu vstupnú '
+                        'hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+              'example': 'def add(a, b):\n'
+                         '    return a + b\n'
+                         'assert add(1, 2) == 3\n'
+                         'assert add(0, 0) == 0\n'
+                         'assert add(-1, 1) == 0\n'
+                         '# Explain your modification here',
+              'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+              'mode': 'syntax'}],
+ 'Testing in Details': [{'title': 'Unittest class',
+                         'prompt': 'Vytvor triedu testov dediacu z unittest.TestCase.',
+                         'example': 'import unittest\nclass TestMath(unittest.TestCase):\n    pass',
+                         'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                 'Testovacie metódy musia spravidla začínať `test_`.',
+                         'mode': 'syntax'},
+                        {'title': 'Assert equal',
+                         'prompt': 'Napíš test metódou assertEqual.',
+                         'example': 'import unittest\n'
+                                    'class TestMath(unittest.TestCase):\n'
+                                    '    def test_add(self):\n'
+                                    '        self.assertEqual(2 + 3, 5)',
+                         'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                 'Testovacie metódy musia spravidla začínať `test_`.',
+                         'mode': 'syntax'},
+                        {'title': 'SetUp',
+                         'prompt': 'Pridaj metódu setUp s testovacími údajmi.',
+                         'example': 'import unittest\n'
+                                    'class TestList(unittest.TestCase):\n'
+                                    '    def setUp(self):\n'
+                                    '        self.items = [1, 2]',
+                         'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                 'Testovacie metódy musia spravidla začínať `test_`.',
+                         'mode': 'syntax'},
+                        {'title': 'Exception test',
+                         'prompt': 'Použi assertRaises na očakávanú chybu.',
+                         'example': 'import unittest\n'
+                                    'class TestErrors(unittest.TestCase):\n'
+                                    '    def test_invalid(self):\n'
+                                    '        with self.assertRaises(ValueError):\n'
+                                    '            int("abc")',
+                         'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                 'Testovacie metódy musia spravidla začínať `test_`.',
+                         'mode': 'syntax'},
+                        {'title': 'Challenge: Unittest class',
+                         'prompt': 'Rozšírenie úlohy: Vytvor triedu testov dediacu z unittest.TestCase. Zmeň '
+                                   'aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                   'výsledok.',
+                         'example': 'import unittest\n'
+                                    'class TestMath(unittest.TestCase):\n'
+                                    '    pass\n'
+                                    '# Explain your modification here',
+                         'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                 'výsledok.',
+                         'mode': 'syntax'},
+                        {'title': 'Challenge: Assert equal',
+                         'prompt': 'Rozšírenie úlohy: Napíš test metódou assertEqual. Zmeň aspoň jednu '
+                                   'vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                         'example': 'import unittest\n'
+                                    'class TestMath(unittest.TestCase):\n'
+                                    '    def test_add(self):\n'
+                                    '        self.assertEqual(2 + 3, 5)\n'
+                                    '# Explain your modification here',
+                         'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                 'výsledok.',
+                         'mode': 'syntax'},
+                        {'title': 'Challenge: SetUp',
+                         'prompt': 'Rozšírenie úlohy: Pridaj metódu setUp s testovacími údajmi. Zmeň aspoň '
+                                   'jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                   'výsledok.',
+                         'example': 'import unittest\n'
+                                    'class TestList(unittest.TestCase):\n'
+                                    '    def setUp(self):\n'
+                                    '        self.items = [1, 2]\n'
+                                    '# Explain your modification here',
+                         'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                 'výsledok.',
+                         'mode': 'syntax'},
+                        {'title': 'Challenge: Exception test',
+                         'prompt': 'Rozšírenie úlohy: Použi assertRaises na očakávanú chybu. Zmeň aspoň '
+                                   'jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                   'výsledok.',
+                         'example': 'import unittest\n'
+                                    'class TestErrors(unittest.TestCase):\n'
+                                    '    def test_invalid(self):\n'
+                                    '        with self.assertRaises(ValueError):\n'
+                                    '            int("abc")\n'
+                                    '# Explain your modification here',
+                         'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                 'výsledok.',
+                         'mode': 'syntax'}],
+ 'Basic Modules Overview': [{'title': 'Math',
+                             'prompt': 'Použi math.ceil na zaokrúhlenie nahor.',
+                             'example': 'import math\nprint(math.ceil(3.2))',
+                             'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                     'Moduly štandardnej knižnice nevyžadujú inštaláciu, ale náhľad Run Code '
+                                     'ich nepodporuje.',
+                             'mode': 'syntax'},
+                            {'title': 'Datetime',
+                             'prompt': 'Vytvor konkrétny dátum pomocou datetime.date.',
+                             'example': 'from datetime import date\nd = date(2026, 1, 1)\nprint(d)',
+                             'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                     'Moduly štandardnej knižnice nevyžadujú inštaláciu, ale náhľad Run Code '
+                                     'ich nepodporuje.',
+                             'mode': 'syntax'},
+                            {'title': 'Random',
+                             'prompt': 'Nastav seed a vyber náhodné číslo.',
+                             'example': 'import random\nrandom.seed(1)\nprint(random.randint(1, 10))',
+                             'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                     'Moduly štandardnej knižnice nevyžadujú inštaláciu, ale náhľad Run Code '
+                                     'ich nepodporuje.',
+                             'mode': 'syntax'},
+                            {'title': 'Counter',
+                             'prompt': 'Spočítaj výskyty písmen cez collections.Counter.',
+                             'example': 'from collections import Counter\nprint(Counter("banana"))',
+                             'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. '
+                                     'Moduly štandardnej knižnice nevyžadujú inštaláciu, ale náhľad Run Code '
+                                     'ich nepodporuje.',
+                             'mode': 'syntax'},
+                            {'title': 'Challenge: Math',
+                             'prompt': 'Rozšírenie úlohy: Použi math.ceil na zaokrúhlenie nahor. Zmeň aspoň '
+                                       'jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                       'výsledok.',
+                             'example': 'import math\n'
+                                        'print(math.ceil(3.2))\n'
+                                        '# Explain your modification here',
+                             'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                     'výsledok.',
+                             'mode': 'syntax'},
+                            {'title': 'Challenge: Datetime',
+                             'prompt': 'Rozšírenie úlohy: Vytvor konkrétny dátum pomocou datetime.date. Zmeň '
+                                       'aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý '
+                                       'vysvetlí výsledok.',
+                             'example': 'from datetime import date\n'
+                                        'd = date(2026, 1, 1)\n'
+                                        'print(d)\n'
+                                        '# Explain your modification here',
+                             'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                     'výsledok.',
+                             'mode': 'syntax'},
+                            {'title': 'Challenge: Random',
+                             'prompt': 'Rozšírenie úlohy: Nastav seed a vyber náhodné číslo. Zmeň aspoň '
+                                       'jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                       'výsledok.',
+                             'example': 'import random\n'
+                                        'random.seed(1)\n'
+                                        'print(random.randint(1, 10))\n'
+                                        '# Explain your modification here',
+                             'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                     'výsledok.',
+                             'mode': 'syntax'},
+                            {'title': 'Challenge: Counter',
+                             'prompt': 'Rozšírenie úlohy: Spočítaj výskyty písmen cez collections.Counter. '
+                                       'Zmeň aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý '
+                                       'vysvetlí výsledok.',
+                             'example': 'from collections import Counter\n'
+                                        'print(Counter("banana"))\n'
+                                        '# Explain your modification here',
+                             'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný '
+                                     'výsledok.',
+                             'mode': 'syntax'}],
+ 'Dict Advanced': [{'title': 'Get',
+                    'prompt': 'Použi get na čítanie kľúča s predvolenou hodnotou.',
+                    'example': 'd = {"a": 1}\nprint(d.get("b", 0))',
+                    'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Prístup '
+                            '`d[key]` pri chýbajúcom kľúči vyvolá KeyError; `get()` môže vrátiť None.',
+                    'mode': 'syntax'},
+                   {'title': 'Items',
+                    'prompt': 'Prejdi všetky dvojice kľúč–hodnota cez items().',
+                    'example': 'd = {"a": 1, "b": 2}\nfor key, value in d.items():\n    print(key, value)',
+                    'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Prístup '
+                            '`d[key]` pri chýbajúcom kľúči vyvolá KeyError; `get()` môže vrátiť None.',
+                    'mode': 'syntax'},
+                   {'title': 'Update',
+                    'prompt': 'Pridaj viac položiek pomocou update().',
+                    'example': 'd = {"a": 1}\nd.update({"b": 2})\nprint(d)',
+                    'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Prístup '
+                            '`d[key]` pri chýbajúcom kľúči vyvolá KeyError; `get()` môže vrátiť None.',
+                    'mode': 'syntax'},
+                   {'title': 'Nested dict',
+                    'prompt': 'Vytvor vnorený slovník pre dvoch žiakov.',
+                    'example': 'students = {"Eva": {"age": 13}, "Tom": {"age": 14}}\n'
+                               'print(students["Eva"]["age"])',
+                    'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Prístup '
+                            '`d[key]` pri chýbajúcom kľúči vyvolá KeyError; `get()` môže vrátiť None.',
+                    'mode': 'syntax'},
+                   {'title': 'Challenge: Get',
+                    'prompt': 'Rozšírenie úlohy: Použi get na čítanie kľúča s predvolenou hodnotou. Zmeň '
+                              'aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                              'výsledok.',
+                    'example': 'd = {"a": 1}\nprint(d.get("b", 0))\n# Explain your modification here',
+                    'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+                    'mode': 'syntax'},
+                   {'title': 'Challenge: Items',
+                    'prompt': 'Rozšírenie úlohy: Prejdi všetky dvojice kľúč–hodnota cez items(). Zmeň aspoň '
+                              'jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                    'example': 'd = {"a": 1, "b": 2}\n'
+                               'for key, value in d.items():\n'
+                               '    print(key, value)\n'
+                               '# Explain your modification here',
+                    'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+                    'mode': 'syntax'},
+                   {'title': 'Challenge: Update',
+                    'prompt': 'Rozšírenie úlohy: Pridaj viac položiek pomocou update(). Zmeň aspoň jednu '
+                              'vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                    'example': 'd = {"a": 1}\nd.update({"b": 2})\nprint(d)\n# Explain your modification here',
+                    'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+                    'mode': 'syntax'},
+                   {'title': 'Challenge: Nested dict',
+                    'prompt': 'Rozšírenie úlohy: Vytvor vnorený slovník pre dvoch žiakov. Zmeň aspoň jednu '
+                              'vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                    'example': 'students = {"Eva": {"age": 13}, "Tom": {"age": 14}}\n'
+                               'print(students["Eva"]["age"])\n'
+                               '# Explain your modification here',
+                    'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+                    'mode': 'syntax'}],
+ 'Extra': [{'title': 'Sort numbers',
+            'prompt': 'Zoraď zoznam čísel vzostupne.',
+            'example': 'numbers = [4, 1, 3]\nprint(sorted(numbers))',
+            'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Nie každá stručná '
+                    'konštrukcia je najčitateľnejšia; uprednostni zrozumiteľný kód.',
+            'mode': 'syntax'},
+           {'title': 'Enumerate',
+            'prompt': 'Vypíš index a hodnotu každej položky.',
+            'example': 'for index, item in enumerate(["a", "b"]):\n    print(index, item)',
+            'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Nie každá stručná '
+                    'konštrukcia je najčitateľnejšia; uprednostni zrozumiteľný kód.',
+            'mode': 'syntax'},
+           {'title': 'Zip',
+            'prompt': 'Spoj dva zoznamy do dvojíc pomocou zip.',
+            'example': 'names = ["Eva", "Tom"]\nages = [13, 14]\nprint(list(zip(names, ages)))',
+            'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Nie každá stručná '
+                    'konštrukcia je najčitateľnejšia; uprednostni zrozumiteľný kód.',
+            'mode': 'syntax'},
+           {'title': 'Lambda',
+            'prompt': 'Vytvor krátku lambda funkciu na násobenie dvomi.',
+            'example': 'double = lambda x: x * 2\nprint(double(5))',
+            'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Nie každá stručná '
+                    'konštrukcia je najčitateľnejšia; uprednostni zrozumiteľný kód.',
+            'mode': 'syntax'},
+           {'title': 'Challenge: Sort numbers',
+            'prompt': 'Rozšírenie úlohy: Zoraď zoznam čísel vzostupne. Zmeň aspoň jednu vstupnú hodnotu '
+                      'alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+            'example': 'numbers = [4, 1, 3]\nprint(sorted(numbers))\n# Explain your modification here',
+            'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+            'mode': 'syntax'},
+           {'title': 'Challenge: Enumerate',
+            'prompt': 'Rozšírenie úlohy: Vypíš index a hodnotu každej položky. Zmeň aspoň jednu vstupnú '
+                      'hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+            'example': 'for index, item in enumerate(["a", "b"]):\n'
+                       '    print(index, item)\n'
+                       '# Explain your modification here',
+            'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+            'mode': 'syntax'},
+           {'title': 'Challenge: Zip',
+            'prompt': 'Rozšírenie úlohy: Spoj dva zoznamy do dvojíc pomocou zip. Zmeň aspoň jednu vstupnú '
+                      'hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+            'example': 'names = ["Eva", "Tom"]\n'
+                       'ages = [13, 14]\n'
+                       'print(list(zip(names, ages)))\n'
+                       '# Explain your modification here',
+            'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+            'mode': 'syntax'},
+           {'title': 'Challenge: Lambda',
+            'prompt': 'Rozšírenie úlohy: Vytvor krátku lambda funkciu na násobenie dvomi. Zmeň aspoň jednu '
+                      'vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+            'example': 'double = lambda x: x * 2\nprint(double(5))\n# Explain your modification here',
+            'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+            'mode': 'syntax'}],
+ 'Python Practice': [{'title': 'Temperature',
+                      'prompt': 'Napíš funkciu, ktorá prevedie stupne Celzia na Fahrenheit.',
+                      'example': 'def to_fahrenheit(c):\n    return c * 9 / 5 + 32\nprint(to_fahrenheit(0))',
+                      'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Pri '
+                              'priemere ošetri prázdny zoznam; pri väčších úlohách si vytvor vlastné testy.',
+                      'mode': 'syntax'},
+                     {'title': 'Even numbers',
+                      'prompt': 'Napíš funkciu, ktorá vráti párne čísla zo zoznamu.',
+                      'example': 'def evens(items):\n'
+                                 '    return [x for x in items if x % 2 == 0]\n'
+                                 'print(evens([1, 2, 3, 4]))',
+                      'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Pri '
+                              'priemere ošetri prázdny zoznam; pri väčších úlohách si vytvor vlastné testy.',
+                      'mode': 'syntax'},
+                     {'title': 'Word counter',
+                      'prompt': 'Spočítaj slová vo vete.',
+                      'example': 'text = "I love Python"\nprint(len(text.split()))',
+                      'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Pri '
+                              'priemere ošetri prázdny zoznam; pri väčších úlohách si vytvor vlastné testy.',
+                      'mode': 'syntax'},
+                     {'title': 'Mini project',
+                      'prompt': 'Napíš jednoduchú funkciu na výpočet priemeru čísel.',
+                      'example': 'def average(numbers):\n'
+                                 '    return sum(numbers) / len(numbers)\n'
+                                 'print(average([2, 4, 6]))',
+                      'hint': 'Pozri si ukážku, rozober jednotlivé riadky a vysvetli, prečo fungujú. Pri '
+                              'priemere ošetri prázdny zoznam; pri väčších úlohách si vytvor vlastné testy.',
+                      'mode': 'syntax'},
+                     {'title': 'Challenge: Temperature',
+                      'prompt': 'Rozšírenie úlohy: Napíš funkciu, ktorá prevedie stupne Celzia na '
+                                'Fahrenheit. Zmeň aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, '
+                                'ktorý vysvetlí výsledok.',
+                      'example': 'def to_fahrenheit(c):\n'
+                                 '    return c * 9 / 5 + 32\n'
+                                 'print(to_fahrenheit(0))\n'
+                                 '# Explain your modification here',
+                      'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+                      'mode': 'syntax'},
+                     {'title': 'Challenge: Even numbers',
+                      'prompt': 'Rozšírenie úlohy: Napíš funkciu, ktorá vráti párne čísla zo zoznamu. Zmeň '
+                                'aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                'výsledok.',
+                      'example': 'def evens(items):\n'
+                                 '    return [x for x in items if x % 2 == 0]\n'
+                                 'print(evens([1, 2, 3, 4]))\n'
+                                 '# Explain your modification here',
+                      'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+                      'mode': 'syntax'},
+                     {'title': 'Challenge: Word counter',
+                      'prompt': 'Rozšírenie úlohy: Spočítaj slová vo vete. Zmeň aspoň jednu vstupnú hodnotu '
+                                'alebo názov a doplň komentár, ktorý vysvetlí výsledok.',
+                      'example': 'text = "I love Python"\n'
+                                 'print(len(text.split()))\n'
+                                 '# Explain your modification here',
+                      'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+                      'mode': 'syntax'},
+                     {'title': 'Challenge: Mini project',
+                      'prompt': 'Rozšírenie úlohy: Napíš jednoduchú funkciu na výpočet priemeru čísel. Zmeň '
+                                'aspoň jednu vstupnú hodnotu alebo názov a doplň komentár, ktorý vysvetlí '
+                                'výsledok.',
+                      'example': 'def average(numbers):\n'
+                                 '    return sum(numbers) / len(numbers)\n'
+                                 'print(average([2, 4, 6]))\n'
+                                 '# Explain your modification here',
+                      'hint': 'Najprv uprav hodnotu alebo názov a potom komentárom opíš očakávaný výsledok.',
+                      'mode': 'syntax'}]})
+DETAILED_EXPLANATIONS.update({'Decorators': ('Dekorátor / decorator obalí funkciu ďalšou funkciou. Zápis @decorator je skrátený spôsob '
+                'priradenia obalenej funkcie. Vnorená funkcia wrapper môže vykonať kód pred volaním aj po '
+                'volaní.',
+                '`def wrapper():`\n`    print("before")`\n`    print("hello")`',
+                '1. Najprv si všimni definície a priradenia. 2. Príkazy sa vykonávajú zhora nadol, telo '
+                'funkcie až pri volaní. 3. Skontroluj výsledok a prípadné vedľajšie účinky. Príklad: Vytvor '
+                'funkciu wrapper, ktorá zavolá inú funkciu.',
+                'Dekorátor musí spravidla vrátiť funkciu; `@` nie je operátor násobenia. / Common mistake: '
+                'check indentation, parentheses and names.'),
+ 'Classes': ('Trieda / class je predloha objektov. `__init__` nastavuje údaje pri vytvorení objektu; `self` '
+             'označuje aktuálnu inštanciu. Metódy sa volajú cez bodku.',
+             '`class Animal:`\n`    pass`\n``\n`a = Animal()`',
+             '1. Najprv si všimni definície a priradenia. 2. Príkazy sa vykonávajú zhora nadol, telo funkcie '
+             'až pri volaní. 3. Skontroluj výsledok a prípadné vedľajšie účinky. Príklad: Vytvor prázdnu '
+             'triedu Animal a jej objekt.',
+             'V metódach nezabudni na parameter `self` a na odsadenie. / Common mistake: check indentation, '
+             'parentheses and names.'),
+ 'Classes in Details': ('Atribúty inštancie patria konkrétnemu objektu, triedne atribúty zdieľajú inštancie. '
+                        '`@classmethod` pracuje s triedou a `@staticmethod` nepotrebuje self ani cls.',
+                        '`class Dog:`\n`    species = "canine"`',
+                        '1. Najprv si všimni definície a priradenia. 2. Príkazy sa vykonávajú zhora nadol, '
+                        'telo funkcie až pri volaní. 3. Skontroluj výsledok a prípadné vedľajšie účinky. '
+                        'Príklad: Vytvor triedu s triednym atribútom species.',
+                        'Nezamieňaj `self` (objekt) a `cls` (trieda). / Common mistake: check indentation, '
+                        'parentheses and names.'),
+ 'Iterators and Generators': ('Iterátor poskytuje hodnoty postupne cez `iter()` a `next()`. Generátor '
+                              'používa `yield`, takže si medzi krokmi pamätá stav bez vytvorenia celého '
+                              'zoznamu.',
+                              '`items = iter([10, 20, 30])`\n`print(next(items))`',
+                              '1. Najprv si všimni definície a priradenia. 2. Príkazy sa vykonávajú zhora '
+                              'nadol, telo funkcie až pri volaní. 3. Skontroluj výsledok a prípadné '
+                              'vedľajšie účinky. Príklad: Vytvor iterátor zo zoznamu a vyber prvý prvok.',
+                              '`yield` nie je to isté ako `return`; generátor sa môže vyčerpať. / Common '
+                              'mistake: check indentation, parentheses and names.'),
+ 'Modules and Imports': ('Modul je Python súbor s funkciami a premennými. `import math` načíta modul, `from '
+                         'math import sqrt` konkrétnu funkciu. Alias `as` zmení názov pri používaní.',
+                         '`import math`\n`print(math.pi)`',
+                         '1. Najprv si všimni definície a priradenia. 2. Príkazy sa vykonávajú zhora nadol, '
+                         'telo funkcie až pri volaní. 3. Skontroluj výsledok a prípadné vedľajšie účinky. '
+                         'Príklad: Načítaj modul math a vypíš pi.',
+                         'Nepoužívaj názvy súborov `math.py` alebo `random.py`, ktoré tienia štandardné '
+                         'moduly. / Common mistake: check indentation, parentheses and names.'),
+ 'OOP: Single Inheritance': ('Dedenie / inheritance umožňuje podtriede zdediť metódy rodičovskej triedy. '
+                             '`super()` zavolá implementáciu rodiča. Podtrieda môže metódu prepísať.',
+                             '`class Animal:`\n`    def speak(self):`\n`        return "sound"`',
+                             '1. Najprv si všimni definície a priradenia. 2. Príkazy sa vykonávajú zhora '
+                             'nadol, telo funkcie až pri volaní. 3. Skontroluj výsledok a prípadné vedľajšie '
+                             'účinky. Príklad: Definuj triedu Animal s metódou speak.',
+                             'Ak prepíšeš `__init__`, rodičovský konštruktor sa nezavolá automaticky. / '
+                             'Common mistake: check indentation, parentheses and names.'),
+ 'OOP: Multiple Inheritance': ('Viacnásobné dedenie znamená, že trieda dedí z viacerých rodičov. Python '
+                               'používa MRO (method resolution order), ktoré určuje poradie hľadania metód.',
+                               '`class Flyer:`\n'
+                               '`    pass`\n'
+                               '`class Swimmer:`\n'
+                               '`    pass`\n'
+                               '`class Duck(Flyer, Swimmer):`\n'
+                               '`    pass`',
+                               '1. Najprv si všimni definície a priradenia. 2. Príkazy sa vykonávajú zhora '
+                               'nadol, telo funkcie až pri volaní. 3. Skontroluj výsledok a prípadné '
+                               'vedľajšie účinky. Príklad: Vytvor triedy Flyer, Swimmer a Duck, ktorá dedí z '
+                               'oboch.',
+                               'Poradie rodičov v zátvorkách môže ovplyvniť vybranú metódu. / Common '
+                               'mistake: check indentation, parentheses and names.'),
+ 'OOP: Encapsulation, Polymorphism, Abstraction': ('Zapuzdrenie / encapsulation zoskupuje údaje a správanie. '
+                                                   'Polymorfizmus znamená rovnaké rozhranie pre rôzne '
+                                                   'objekty. Abstraktné triedy definujú povinné metódy '
+                                                   'potomkov.',
+                                                   '`class Account:`\n'
+                                                   '`    def __init__(self):`\n'
+                                                   '`        self._balance = 0`',
+                                                   '1. Najprv si všimni definície a priradenia. 2. Príkazy '
+                                                   'sa vykonávajú zhora nadol, telo funkcie až pri volaní. '
+                                                   '3. Skontroluj výsledok a prípadné vedľajšie účinky. '
+                                                   'Príklad: Vytvor triedu s interným atribútom _balance.',
+                                                   'Jedno podčiarkovník je konvencia, nie bezpečnostná '
+                                                   'ochrana súkromia. / Common mistake: check indentation, '
+                                                   'parentheses and names.'),
+ 'Properties and Descriptors': ('`@property` umožňuje pristupovať k metóde ako k atribútu a kontrolovať '
+                                'hodnoty pri nastavovaní. Deskriptor implementuje napríklad `__get__` a '
+                                '`__set__`.',
+                                '`class Person:`\n'
+                                '`    def __init__(self, age):`\n'
+                                '`        self._age = age`\n'
+                                '`    @property`\n'
+                                '`    def age(self):`\n'
+                                '`        return self._age`',
+                                '1. Najprv si všimni definície a priradenia. 2. Príkazy sa vykonávajú zhora '
+                                'nadol, telo funkcie až pri volaní. 3. Skontroluj výsledok a prípadné '
+                                'vedľajšie účinky. Príklad: Vytvor property na čítanie veku.',
+                                'Vo vnútri property používaj napr. `_age`, inak môže vzniknúť nekonečná '
+                                'rekurzia. / Common mistake: check indentation, parentheses and names.'),
+ 'Exception Handling': ('Výnimky / exceptions signalizujú chyby pri behu programu. `try` obsahuje rizikový '
+                        'kód, `except` zachytí konkrétnu výnimku, `finally` sa vykoná vždy.',
+                        '`try:`\n'
+                        '`    value = int("abc")`\n'
+                        '`except ValueError:`\n'
+                        '`    print("Invalid number")`',
+                        '1. Najprv si všimni definície a priradenia. 2. Príkazy sa vykonávajú zhora nadol, '
+                        'telo funkcie až pri volaní. 3. Skontroluj výsledok a prípadné vedľajšie účinky. '
+                        'Príklad: Zachyť ValueError pri int("abc").',
+                        'Nezachytávaj bezdôvodne všetky chyby holým `except:`. / Common mistake: check '
+                        'indentation, parentheses and names.'),
+ 'Exceptions in Details': ('`raise` vyvolá výnimku úmyselne. Vlastné výnimky dedia z `Exception`. `except '
+                           '... as err` poskytne informáciu o chybe; viac typov možno zachytiť ako tuple.',
+                           '`age = -1`\n`if age < 0:`\n`    raise ValueError("negative age")`',
+                           '1. Najprv si všimni definície a priradenia. 2. Príkazy sa vykonávajú zhora '
+                           'nadol, telo funkcie až pri volaní. 3. Skontroluj výsledok a prípadné vedľajšie '
+                           'účinky. Príklad: Vyvolaj ValueError pri zápornom veku.',
+                           'Vyvolávaj konkrétne výnimky a poskytuj užitočné správy. / Common mistake: check '
+                           'indentation, parentheses and names.'),
+ 'File Handling': ('Súbory sa otvárajú cez `open()`. Blok `with` súbor automaticky zatvorí. Režimy `r`, `w`, '
+                   '`a` znamenajú čítanie, zápis a pridávanie.',
+                   '`with open("notes.txt", "r", encoding="utf-8") as f:`\n`    text = f.read()`',
+                   '1. Najprv si všimni definície a priradenia. 2. Príkazy sa vykonávajú zhora nadol, telo '
+                   'funkcie až pri volaní. 3. Skontroluj výsledok a prípadné vedľajšie účinky. Príklad: '
+                   'Napíš ukážku bezpečného čítania textového súboru.',
+                   '`w` prepíše existujúci obsah; online náhľad nepovoľuje skutočnú prácu so súbormi. / '
+                   'Common mistake: check indentation, parentheses and names.'),
+ 'Memory Management': ('Python spravuje pamäť automaticky. Mená premenných odkazujú na objekty; počet '
+                       'referencií a garbage collector pomáhajú uvoľňovať nepoužívané objekty. `del` '
+                       'odstraňuje väzbu mena, nie nevyhnutne objekt.',
+                       '`a = [1, 2]`\n`b = a`\n`print(a is b)`',
+                       '1. Najprv si všimni definície a priradenia. 2. Príkazy sa vykonávajú zhora nadol, '
+                       'telo funkcie až pri volaní. 3. Skontroluj výsledok a prípadné vedľajšie účinky. '
+                       'Príklad: Ukáž dve premenné odkazujúce na ten istý zoznam.',
+                       '`del` nie je príkaz na okamžité uvoľnenie všetkej pamäte objektu. / Common mistake: '
+                       'check indentation, parentheses and names.'),
+ 'Testing': ('Testy kontrolujú očakávané správanie programu. `assert` porovnáva výsledok s očakávanou '
+             'hodnotou. Testuj bežné vstupy, hraničné hodnoty aj chybné vstupy.',
+             '`assert 2 + 3 == 5`',
+             '1. Najprv si všimni definície a priradenia. 2. Príkazy sa vykonávajú zhora nadol, telo funkcie '
+             'až pri volaní. 3. Skontroluj výsledok a prípadné vedľajšie účinky. Príklad: Otestuj súčet 2+3 '
+             'pomocou assert.',
+             'Test pre jeden vstup nedokazuje správnosť pre všetky vstupy. / Common mistake: check '
+             'indentation, parentheses and names.'),
+ 'Testing in Details': ('`unittest` organizuje testy do tried a používa metódy `assertEqual`, `assertTrue` a '
+                        'ďalšie. Testovacie prípravky `setUp` a `tearDown` pripravujú a upratujú prostredie.',
+                        '`import unittest`\n`class TestMath(unittest.TestCase):`\n`    pass`',
+                        '1. Najprv si všimni definície a priradenia. 2. Príkazy sa vykonávajú zhora nadol, '
+                        'telo funkcie až pri volaní. 3. Skontroluj výsledok a prípadné vedľajšie účinky. '
+                        'Príklad: Vytvor triedu testov dediacu z unittest.TestCase.',
+                        'Testovacie metódy musia spravidla začínať `test_`. / Common mistake: check '
+                        'indentation, parentheses and names.'),
+ 'Basic Modules Overview': ('Štandardná knižnica Pythonu obsahuje napríklad `math` pre matematiku, '
+                            '`datetime` pre dátumy, `random` pre náhodné čísla a `collections` pre dátové '
+                            'štruktúry.',
+                            '`import math`\n`print(math.ceil(3.2))`',
+                            '1. Najprv si všimni definície a priradenia. 2. Príkazy sa vykonávajú zhora '
+                            'nadol, telo funkcie až pri volaní. 3. Skontroluj výsledok a prípadné vedľajšie '
+                            'účinky. Príklad: Použi math.ceil na zaokrúhlenie nahor.',
+                            'Moduly štandardnej knižnice nevyžadujú inštaláciu, ale náhľad Run Code ich '
+                            'nepodporuje. / Common mistake: check indentation, parentheses and names.'),
+ 'Dict Advanced': ('Slovník / dictionary ukladá dvojice kľúč–hodnota. `get()` bezpečne číta chýbajúce kľúče, '
+                   '`items()` poskytuje dvojice, `update()` spája údaje a vnorené slovníky organizujú '
+                   'zložitejšie dáta.',
+                   '`d = {"a": 1}`\n`print(d.get("b", 0))`',
+                   '1. Najprv si všimni definície a priradenia. 2. Príkazy sa vykonávajú zhora nadol, telo '
+                   'funkcie až pri volaní. 3. Skontroluj výsledok a prípadné vedľajšie účinky. Príklad: '
+                   'Použi get na čítanie kľúča s predvolenou hodnotou.',
+                   'Prístup `d[key]` pri chýbajúcom kľúči vyvolá KeyError; `get()` môže vrátiť None. / '
+                   'Common mistake: check indentation, parentheses and names.'),
+ 'Extra': ('Dodatočné témy / Extra: kombinuj spracovanie údajov, triedenie, výnimky a funkcie. Uč sa '
+           'rozdeliť väčší problém na malé kroky a overovať výsledky.',
+           '`numbers = [4, 1, 3]`\n`print(sorted(numbers))`',
+           '1. Najprv si všimni definície a priradenia. 2. Príkazy sa vykonávajú zhora nadol, telo funkcie '
+           'až pri volaní. 3. Skontroluj výsledok a prípadné vedľajšie účinky. Príklad: Zoraď zoznam čísel '
+           'vzostupne.',
+           'Nie každá stručná konštrukcia je najčitateľnejšia; uprednostni zrozumiteľný kód. / Common '
+           'mistake: check indentation, parentheses and names.'),
+ 'Python Practice': ('Záverečné precvičovanie / Final practice: rozdeľ problém na vstup, spracovanie a '
+                     'výstup. Použi premenné, podmienky, cykly a funkcie. Každé riešenie doplň testom a '
+                     'vysvetlením.',
+                     '`def to_fahrenheit(c):`\n`    return c * 9 / 5 + 32`\n`print(to_fahrenheit(0))`',
+                     '1. Najprv si všimni definície a priradenia. 2. Príkazy sa vykonávajú zhora nadol, telo '
+                     'funkcie až pri volaní. 3. Skontroluj výsledok a prípadné vedľajšie účinky. Príklad: '
+                     'Napíš funkciu, ktorá prevedie stupne Celzia na Fahrenheit.',
+                     'Pri priemere ošetri prázdny zoznam; pri väčších úlohách si vytvor vlastné testy. / '
+                     'Common mistake: check indentation, parentheses and names.')})
+
+
 def fallback_tasks(topic):
     # These are practice activities, not semantic correctness tests for the topic.
     return [
