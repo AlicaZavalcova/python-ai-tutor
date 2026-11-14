@@ -736,6 +736,378 @@ DETAILED_EXPLANATIONS.update({'Functions': ('A function groups reusable commands
                  'iba syntax, nie výsledok.')})
 
 
+
+# Expanded lessons for chapters 17–24.
+TASKS.update({'Type Conversion': [{'title': 'Integer from text',
+                      'prompt': 'Preveď text "25" na celé číslo pomocou int() a vypíš výsledok.',
+                      'example': 'print(int("25"))',
+                      'hint': 'int() prevádza číselný text.',
+                      'mode': 'syntax'},
+                     {'title': 'Add converted number',
+                      'prompt': 'Preveď "12" pomocou int() a vypíš výsledok + 8.',
+                      'example': 'print(int("12") + 8)',
+                      'hint': 'Najprv preveď text.',
+                      'mode': 'syntax'},
+                     {'title': 'Float from text',
+                      'prompt': 'Preveď "3.5" na float a vypíš hodnotu.',
+                      'example': 'print(float("3.5"))',
+                      'hint': 'Použi desatinnú bodku.',
+                      'mode': 'syntax'},
+                     {'title': 'Number to string',
+                      'prompt': 'Preveď číslo 42 na str a spoj s textom "Age: ".',
+                      'example': 'print("Age: " + str(42))',
+                      'hint': 'str() zmení číslo na text.',
+                      'mode': 'syntax'},
+                     {'title': 'String concatenation',
+                      'prompt': 'Vysvetli rozdiel medzi "2" + "3" a int("2") + int("3") a vypíš oba '
+                                'výsledky.',
+                      'example': 'print("2" + "3")\nprint(int("2") + int("3"))',
+                      'hint': 'Prvý výsledok je text, druhý číslo.',
+                      'mode': 'syntax'},
+                     {'title': 'Float to int',
+                      'prompt': 'Vyskúšaj int(7.9) a vypíš výsledok.',
+                      'example': 'print(int(7.9))',
+                      'hint': 'int() pri kladnom čísle odstráni desatinnú časť.',
+                      'mode': 'syntax'},
+                     {'title': 'User age variable',
+                      'prompt': 'Nastav age_text = "16", preveď ho na int a vypíš age + 1.',
+                      'example': 'age_text = "16"\nage = int(age_text)\nprint(age + 1)',
+                      'hint': 'Pracuj s dvoma premennými.',
+                      'mode': 'syntax'},
+                     {'title': 'Invalid conversion',
+                      'prompt': 'Napíš try/except pre pokus int("abc") a vypíš upozornenie pri ValueError.',
+                      'example': 'try:\n    print(int("abc"))\nexcept ValueError:\n    print("Invalid")',
+                      'hint': 'Nečíselný text nemožno previesť na int.',
+                      'mode': 'syntax'}],
+ 'Loops In Details': [{'title': 'Step range',
+                       'prompt': 'Pomocou range(2, 9, 2) vypíš párne čísla.',
+                       'example': 'for x in range(2, 9, 2):\n    print(x)',
+                       'hint': 'Tretí argument je krok.',
+                       'mode': 'syntax'},
+                      {'title': 'Reverse count',
+                       'prompt': 'Vypíš 5, 4, 3, 2, 1 pomocou range().',
+                       'example': 'for x in range(5, 0, -1):\n    print(x)',
+                       'hint': 'Záporný krok odpočítava.',
+                       'mode': 'syntax'},
+                      {'title': 'Sum numbers',
+                       'prompt': 'Spočítaj čísla od 1 do 5 pomocou for.',
+                       'example': 'total = 0\nfor n in range(1, 6):\n    total += n\nprint(total)',
+                       'hint': 'Priebežný súčet ulož do total.',
+                       'mode': 'syntax'},
+                      {'title': 'Iterate list',
+                       'prompt': 'Pomocou for vypíš všetky prvky ["red", "blue"].',
+                       'example': 'for color in ["red", "blue"]:\n    print(color)',
+                       'hint': 'Cyklus prechádza hodnoty.',
+                       'mode': 'syntax'},
+                      {'title': 'While count',
+                       'prompt': 'Pomocou while vypíš čísla od 1 do 3.',
+                       'example': 'n = 1\nwhile n <= 3:\n    print(n)\n    n += 1',
+                       'hint': 'Nezabudni zvyšovať n.',
+                       'mode': 'syntax'},
+                      {'title': 'Break',
+                       'prompt': 'V cykle range(10) ukonči opakovanie pri hodnote 4.',
+                       'example': 'for n in range(10):\n    if n == 4:\n        break\n    print(n)',
+                       'hint': 'break ukončí celý cyklus.',
+                       'mode': 'syntax'},
+                      {'title': 'Continue',
+                       'prompt': 'Vypíš čísla 0 až 4 okrem čísla 2 pomocou continue.',
+                       'example': 'for n in range(5):\n    if n == 2:\n        continue\n    print(n)',
+                       'hint': 'continue preskočí jednu iteráciu.',
+                       'mode': 'syntax'},
+                      {'title': 'Nested loops',
+                       'prompt': 'Použi dva vnorené for cykly a vypíš dvojice súradníc 0 a 1.',
+                       'example': 'for a in range(2):\n    for b in range(2):\n        print(a, b)',
+                       'hint': 'Vnútorný cyklus prebehne pre každú hodnotu vonkajšieho.',
+                       'mode': 'syntax'}],
+ 'Functions Revisited': [{'title': 'Square',
+                          'prompt': 'Definuj square(n), ktorá vráti n*n, a vypíš square(5).',
+                          'example': 'def square(n):\n    return n*n\nprint(square(5))',
+                          'hint': 'Použi return.',
+                          'mode': 'syntax'},
+                         {'title': 'Greeting',
+                          'prompt': 'Definuj greet(name), ktorá vráti "Hi " + name.',
+                          'example': 'def greet(name):\n    return "Hi " + name\nprint(greet("Mia"))',
+                          'hint': 'Parameter name je text.',
+                          'mode': 'syntax'},
+                         {'title': 'Two parameters',
+                          'prompt': 'Definuj add(a,b), ktorá vráti súčet.',
+                          'example': 'def add(a,b):\n    return a+b\nprint(add(2,3))',
+                          'hint': 'Vráť a+b.',
+                          'mode': 'syntax'},
+                         {'title': 'Default parameter',
+                          'prompt': 'Definuj greet(name="friend") a zavolaj ju bez argumentu.',
+                          'example': 'def greet(name="friend"):\n    return "Hi " + name\nprint(greet())',
+                          'hint': 'Predvolená hodnota sa použije pri vynechaní argumentu.',
+                          'mode': 'syntax'},
+                         {'title': 'Local variable',
+                          'prompt': 'Vo funkcii vytvor lokálnu premennú result a vráť ju.',
+                          'example': 'def double(n):\n'
+                                     '    result = n * 2\n'
+                                     '    return result\n'
+                                     'print(double(4))',
+                          'hint': 'result existuje iba vo funkcii.',
+                          'mode': 'syntax'},
+                         {'title': 'Return pair',
+                          'prompt': 'Vráť z funkcie dve hodnoty ako dvojicu (tuple).',
+                          'example': 'def pair(a,b):\n    return a,b\nprint(pair(1,2))',
+                          'hint': 'Dve hodnoty oddelené čiarkou tvoria tuple.',
+                          'mode': 'syntax'},
+                         {'title': 'Function call twice',
+                          'prompt': 'Definuj triple(n) a zavolaj ju pre 2 a 4.',
+                          'example': 'def triple(n):\n    return n*3\nprint(triple(2))\nprint(triple(4))',
+                          'hint': 'Jednu funkciu možno používať opakovane.',
+                          'mode': 'syntax'},
+                         {'title': 'Function docstring',
+                          'prompt': 'Doplň funkciu s dokumentačným reťazcom (docstring).',
+                          'example': 'def square(n):\n    """Return n squared."""\n    return n*n',
+                          'hint': 'Docstring je prvý reťazec v tele funkcie.',
+                          'mode': 'syntax'}],
+ 'How to Solve GitHub Tasks': [{'title': 'Read statement',
+                                'prompt': 'Napíš komentár s opisom vstupu a výstupu úlohy na sčítanie dvoch '
+                                          'čísel.',
+                                'example': '# Input: two integers\n# Output: their sum',
+                                'hint': 'Začni tým, čo je dané a čo treba vypočítať.',
+                                'mode': 'syntax'},
+                               {'title': 'Design steps',
+                                'prompt': 'Napíš tri komentáre: načítanie údajov, spracovanie, výpis.',
+                                'example': '# Read input\n# Compute result\n# Print output',
+                                'hint': 'Algoritmus si najskôr rozdeľ na kroky.',
+                                'mode': 'syntax'},
+                               {'title': 'Implement sum',
+                                'prompt': 'Napíš funkciu solve(a,b), ktorá vráti ich súčet.',
+                                'example': 'def solve(a,b):\n    return a+b',
+                                'hint': 'Vráť hodnotu, neukončuj program.',
+                                'mode': 'syntax'},
+                               {'title': 'Test normal case',
+                                'prompt': 'Otestuj solve(2,3) pomocou assert.',
+                                'example': 'def solve(a,b):\n    return a+b\nassert solve(2,3)==5',
+                                'hint': 'assert porovnáva skutočný a očakávaný výsledok.',
+                                'mode': 'syntax'},
+                               {'title': 'Test zero',
+                                'prompt': 'Pridaj test pre vstup 0.',
+                                'example': 'def solve(a,b):\n    return a+b\nassert solve(0,5)==5',
+                                'hint': 'Hraničné prípady sú dôležité.',
+                                'mode': 'syntax'},
+                               {'title': 'Test negatives',
+                                'prompt': 'Pridaj test pre záporné čísla.',
+                                'example': 'def solve(a,b):\n    return a+b\nassert solve(-2,3)==1',
+                                'hint': 'Skontroluj aj záporné vstupy.',
+                                'mode': 'syntax'},
+                               {'title': 'Explain complexity',
+                                'prompt': 'Komentárom vysvetli, prečo sčítanie dvoch čísel potrebuje '
+                                          'konštantný počet krokov.',
+                                'example': '# One addition takes a fixed number of steps.',
+                                'hint': 'Časová zložitosť O(1) znamená konštantný počet krokov.',
+                                'mode': 'syntax'},
+                               {'title': 'Final solution',
+                                'prompt': 'Spoj funkciu solve, dva testy assert a komentár o postupe.',
+                                'example': '# Return the sum\n'
+                                           'def solve(a,b):\n'
+                                           '    return a+b\n'
+                                           'assert solve(1,2)==3\n'
+                                           'assert solve(0,0)==0',
+                                'hint': 'Otestuj bežný aj hraničný prípad.',
+                                'mode': 'syntax'}],
+ 'Mutable Immutable Types': [{'title': 'Immutable integer',
+                              'prompt': 'Vytvor x=3, y=x, zmeň y na 5 a vypíš x.',
+                              'example': 'x=3\ny=x\ny=5\nprint(x)',
+                              'hint': 'Priradenie y nemení x.',
+                              'mode': 'syntax'},
+                             {'title': 'Mutable alias',
+                              'prompt': 'Vytvor a=[1], b=a; pridaj 2 cez b a vypíš a.',
+                              'example': 'a=[1]\nb=a\nb.append(2)\nprint(a)',
+                              'hint': 'Obe premenné odkazujú na ten istý zoznam.',
+                              'mode': 'syntax'},
+                             {'title': 'List copy',
+                              'prompt': 'Vytvor kópiu zoznamu pomocou copy() a uprav len kópiu.',
+                              'example': 'a=[1,2]\nb=a.copy()\nb.append(3)\nprint(a)',
+                              'hint': 'Kópia je samostatný zoznam.',
+                              'mode': 'syntax'},
+                             {'title': 'Immutable string',
+                              'prompt': 'Vytvor text="cat" a nový text pripojením "s".',
+                              'example': 'text="cat"\nplural=text+"s"\nprint(plural)',
+                              'hint': 'Reťazce sa nemenia na mieste.',
+                              'mode': 'syntax'},
+                             {'title': 'Tuple',
+                              'prompt': 'Vytvor tuple (1,2,3) a vypíš druhý prvok.',
+                              'example': 't=(1,2,3)\nprint(t[1])',
+                              'hint': 'Tuple sa zapisuje do okrúhlych zátvoriek.',
+                              'mode': 'syntax'},
+                             {'title': 'Dictionary mutation',
+                              'prompt': 'Vytvor slovník a zmeň hodnotu kľúča "score".',
+                              'example': 'd={"score":1}\nd["score"]=2\nprint(d)',
+                              'hint': 'Slovník je meniteľný.',
+                              'mode': 'syntax'},
+                             {'title': 'Aliasing test',
+                              'prompt': 'Pomocou `is` over, či a a b odkazujú na ten istý zoznam.',
+                              'example': 'a=[]\nb=a\nprint(a is b)',
+                              'hint': 'is testuje identitu objektu.',
+                              'mode': 'syntax'},
+                             {'title': 'Nested copy',
+                              'prompt': 'Vytvor vnorený zoznam a v komentári vysvetli, prečo plytká kópia '
+                                        'nezávisle nekopíruje vnorené zoznamy.',
+                              'example': 'a=[[1]]\nb=a.copy()\n# The inner list is still shared.',
+                              'hint': 'Plytká kópia kopíruje iba vonkajší zoznam.',
+                              'mode': 'syntax'}],
+ 'List and Dict Comprehensions': [{'title': 'Squares',
+                                   'prompt': 'Vytvor zoznam druhých mocnín čísel 0 až 4 pomocou '
+                                             'comprehension.',
+                                   'example': 'squares=[x*x for x in range(5)]\nprint(squares)',
+                                   'hint': 'Výraz je pred for.',
+                                   'mode': 'syntax'},
+                                  {'title': 'Evens',
+                                   'prompt': 'Vytvor zoznam párnych čísel z range(10) pomocou if.',
+                                   'example': 'evens=[x for x in range(10) if x%2==0]\nprint(evens)',
+                                   'hint': 'Podmienka nasleduje za for.',
+                                   'mode': 'syntax'},
+                                  {'title': 'Uppercase words',
+                                   'prompt': 'Vytvor zoznam veľkých písmen zo slov ["hi","bye"].',
+                                   'example': 'words=["hi","bye"]\n'
+                                              'upper=[w.upper() for w in words]\n'
+                                              'print(upper)',
+                                   'hint': 'Použi metódu upper().',
+                                   'mode': 'syntax'},
+                                  {'title': 'Length list',
+                                   'prompt': 'Vytvor zoznam dĺžok slov ["cat","house"].',
+                                   'example': 'lengths=[len(w) for w in ["cat","house"]]\nprint(lengths)',
+                                   'hint': 'Využi len(w).',
+                                   'mode': 'syntax'},
+                                  {'title': 'Dict squares',
+                                   'prompt': 'Vytvor slovník, kde kľúč x má hodnotu x*x pre range(4).',
+                                   'example': 'squares={x:x*x for x in range(4)}\nprint(squares)',
+                                   'hint': 'Zložené zátvorky tvoria slovník.',
+                                   'mode': 'syntax'},
+                                  {'title': 'Dict from words',
+                                   'prompt': 'Vytvor slovník slovo: dĺžka pre ["a","cat"].',
+                                   'example': 'd={w:len(w) for w in ["a","cat"]}\nprint(d)',
+                                   'hint': 'Kľúčom je slovo, hodnotou počet znakov.',
+                                   'mode': 'syntax'},
+                                  {'title': 'Filter words',
+                                   'prompt': 'Vytvor zoznam slov dlhších ako 3 znaky.',
+                                   'example': 'words=["cat","house","sun"]\n'
+                                              'long=[w for w in words if len(w)>3]\n'
+                                              'print(long)',
+                                   'hint': 'Použi if len(w) > 3.',
+                                   'mode': 'syntax'},
+                                  {'title': 'Nested comprehension',
+                                   'prompt': 'Vytvor dvojice (x,y) pre x a y v range(2).',
+                                   'example': 'pairs=[(x,y) for x in range(2) for y in range(2)]\n'
+                                              'print(pairs)',
+                                   'hint': 'Dva for výrazy sú v jednom comprehension.',
+                                   'mode': 'syntax'}],
+ 'Functions in Details': [{'title': 'Keyword argument',
+                           'prompt': 'Definuj greet(name) a zavolaj ho pomocou pomenovaného argumentu '
+                                     'name="Eva".',
+                           'example': 'def greet(name):\n    return "Hi " + name\nprint(greet(name="Eva"))',
+                           'hint': 'Pomenovaný argument uvádza názov parametra.',
+                           'mode': 'syntax'},
+                          {'title': 'Default value',
+                           'prompt': 'Definuj power(base, exponent=2), ktorá vráti druhú mocninu, ak '
+                                     'exponent neudáš.',
+                           'example': 'def power(base, exponent=2):\n'
+                                      '    return base ** exponent\n'
+                                      'print(power(3))',
+                           'hint': 'Predvolený parameter patrí za povinný.',
+                           'mode': 'syntax'},
+                          {'title': 'Two return values',
+                           'prompt': 'Definuj min_max(a,b), ktorá vráti obe hodnoty usporiadané.',
+                           'example': 'def min_max(a,b):\n    return min(a,b),max(a,b)',
+                           'hint': 'Funkcia môže vrátiť tuple.',
+                           'mode': 'syntax'},
+                          {'title': 'Docstring',
+                           'prompt': 'Doplň funkcii krátky docstring.',
+                           'example': 'def add(a,b):\n'
+                                      '    """Return the sum of two numbers."""\n'
+                                      '    return a+b',
+                           'hint': 'Docstring sa zapisuje do trojitých úvodzoviek.',
+                           'mode': 'syntax'},
+                          {'title': 'Scope',
+                           'prompt': 'Ukáž lokálnu premennú vo funkcii a komentárom vysvetli jej platnosť.',
+                           'example': 'def f():\n'
+                                      '    local_value=3\n'
+                                      '    return local_value\n'
+                                      '# local_value exists only inside f',
+                           'hint': 'Lokálna premenná neexistuje automaticky mimo funkcie.',
+                           'mode': 'syntax'},
+                          {'title': 'Named arguments',
+                           'prompt': 'Definuj area(width,height) a zavolaj ju s height=3, width=4.',
+                           'example': 'def area(width,height):\n'
+                                      '    return width*height\n'
+                                      'print(area(height=3,width=4))',
+                           'hint': 'Pomenované argumenty môžeš uviesť v inom poradí.',
+                           'mode': 'syntax'},
+                          {'title': 'Recursive factorial',
+                           'prompt': 'Definuj rekurzívnu funkciu factorial(n) so základným prípadom n <= 1.',
+                           'example': 'def factorial(n):\n'
+                                      '    if n<=1:\n'
+                                      '        return 1\n'
+                                      '    return n*factorial(n-1)',
+                           'hint': 'Rekurzia musí mať ukončovaciu podmienku.',
+                           'mode': 'syntax'},
+                          {'title': 'Safe defaults',
+                           'prompt': 'Napíš funkciu add_item(item, items=None), ktorá vytvorí nový zoznam, '
+                                     'ak items chýba.',
+                           'example': 'def add_item(item, items=None):\n'
+                                      '    if items is None:\n'
+                                      '        items=[]\n'
+                                      '    items.append(item)\n'
+                                      '    return items',
+                           'hint': 'Vyhni sa meniteľnému predvolenému argumentu [].',
+                           'mode': 'syntax'}]})
+DETAILED_EXPLANATIONS.update({'Type Conversion': ('Prevod typov / Type conversion: `int("12")` mení číselný text na celé číslo; '
+                     '`float("2.5")` na desatinné; `str(12)` na text. Pri prevode nečíselného textu na číslo '
+                     'vznikne ValueError.',
+                     '`age = int("12")`\n`print(age + 1)`',
+                     '1. Text "12" sa prevedie na číslo 12. 2. Pripočíta sa 1. 3. print vypíše 13.',
+                     '`"12" + "1"` vytvorí text "121", nie číslo 13. Prevod používaj vedome.'),
+ 'Loops In Details': ('Cykly / Loops: `for` prechádza prvky, `range(start, stop, step)` generuje postupnosť '
+                      'bez koncovej hranice. `while` opakuje blok, pokiaľ je podmienka pravdivá. `break` '
+                      'ukončí cyklus a `continue` preskočí iteráciu.',
+                      '`for n in range(2, 7, 2):`\n`    print(n)`',
+                      '1. range vytvorí 2, 4, 6. 2. Telo cyklu sa vykoná trikrát. 3. Každé číslo sa vypíše '
+                      'samostatne.',
+                      'Pozor na odsadenie a nekonečný while cyklus. Náhľad Run Code nepodporuje všetky druhy '
+                      'cyklov.'),
+ 'Functions Revisited': ('Funkcie znova / Functions revisited: `def` vytvorí funkciu, parametre sú vstupy a '
+                         '`return` vráti výsledok. Lokálna premenná existuje iba v rámci funkcie. Predvolené '
+                         'parametre umožňujú volanie s menším počtom argumentov.',
+                         '`def square(n):`\n`    return n * n`\n`print(square(4))`',
+                         '1. Funkcia square sa definuje. 2. Pri volaní sa n nastaví na 4. 3. Vráti sa 16. 4. '
+                         'print zobrazí 16.',
+                         '`return` nie je to isté ako `print`. Náhľad nemusí podporovať predvolené '
+                         'argumenty.'),
+ 'How to Solve GitHub Tasks': ('Riešenie úloh / GitHub tasks: najprv prečítaj zadanie, identifikuj vstupy a '
+                               'očakávaný výstup, navrhni algoritmus, napíš kód, otestuj hraničné prípady a '
+                               'zrozumiteľne vysvetli riešenie.',
+                               '`def solve(numbers):`\n`    return sum(numbers)`',
+                               '1. Určíš vstupný zoznam. 2. Zvolíš postup na sčítanie. 3. Vrátiš výsledok. '
+                               '4. Otestuješ prázdny a krátky zoznam.',
+                               'Príklady tu učia postup riešenia, nie automatické odoslanie na GitHub. '
+                               'Automatická kontrola overuje iba syntax.'),
+ 'Mutable Immutable Types': ('Meniteľné a nemeniteľné typy / Mutable vs immutable: `list` a `dict` sa dajú '
+                             'meniť na mieste; `int`, `str` a `tuple` nie. Dve premenné môžu odkazovať na '
+                             'ten istý zoznam.',
+                             '`a = [1, 2]`\n`b = a`\n`b.append(3)`\n`print(a)`',
+                             '1. a ukazuje na zoznam. 2. b ukazuje na ten istý zoznam. 3. append zmení '
+                             'spoločný objekt. 4. a bude [1, 2, 3].',
+                             '`b = a` nevytvorí kópiu zoznamu. Na nezávislú plytkú kópiu použi `a.copy()`.'),
+ 'List and Dict Comprehensions': ('Comprehensions / Skrátené zápisy: `[x*x for x in range(4)]` vytvorí '
+                                  'zoznam. `{x: x*x for x in range(3)}` vytvorí slovník. Podmienku môžeš '
+                                  'pridať za `if`.',
+                                  '`squares = [x * x for x in range(4)]`\n`print(squares)`',
+                                  '1. range dodá 0, 1, 2, 3. 2. Pre každé x sa vypočíta x*x. 3. Vznikne [0, '
+                                  '1, 4, 9].',
+                                  'Nezamieňaj hranaté [] a zložené {} zátvorky. Run Code nemusí tento zápis '
+                                  'podporovať.'),
+ 'Functions in Details': ('Funkcie podrobnejšie / Functions in detail: parametre môžu byť pozičné alebo '
+                          'pomenované, funkcia môže mať predvolenú hodnotu a môže vracať viac hodnôt ako '
+                          'tuple. Dokumentačný reťazec vysvetľuje účel funkcie.',
+                          '`def greet(name, greeting="Hi"):`\n`    return greeting + " " + name`',
+                          '1. name je povinný parameter. 2. greeting má predvolenú hodnotu. 3. return vráti '
+                          'spojený text.',
+                          'Predvolené meniteľné hodnoty ako `[]` môžu viesť k prekvapivému zdieľaniu stavu. '
+                          'Náhľad podporuje iba časť syntaxe funkcií.')})
+
 def fallback_tasks(topic):
     # These are practice activities, not semantic correctness tests for the topic.
     return [
@@ -1021,14 +1393,55 @@ with st.sidebar:
 
 topic=TOPICS[chapter]
 tasks=TASKS.get(topic) or fallback_tasks(topic)
+if chapter == 19:
+    tasks = [{'title': 'Review print',
+      'prompt': 'Vypíš presne text Review.',
+      'example': 'print("Review")',
+      'hint': 'Dodrž veľké písmeno.',
+      'mode': 'syntax'},
+     {'title': 'Review variable',
+      'prompt': 'Ulož 9 do premennej a vypíš jej dvojnásobok.',
+      'example': 'n = 9\nprint(n*2)',
+      'hint': 'Premennú použi v násobení.',
+      'mode': 'syntax'},
+     {'title': 'Review list',
+      'prompt': 'Vypíš posledný prvok zoznamu [3,6,9].',
+      'example': 'a = [3,6,9]\nprint(a[-1])',
+      'hint': 'Index -1 označuje posledný prvok.',
+      'mode': 'syntax'},
+     {'title': 'Review condition',
+      'prompt': 'Pomocou if/else vypíš, či je 7 väčšie než 5.',
+      'example': 'if 7 > 5:\n    print("yes")\nelse:\n    print("no")',
+      'hint': 'Použi správne odsadenie.',
+      'mode': 'syntax'},
+     {'title': 'Review loop',
+      'prompt': 'Vypíš čísla od 1 do 4 pomocou for.',
+      'example': 'for n in range(1,5):\n    print(n)',
+      'hint': 'Horná hranica sa nezahŕňa.',
+      'mode': 'syntax'},
+     {'title': 'Review function',
+      'prompt': 'Definuj funkciu double(n) a vypíš double(6).',
+      'example': 'def double(n):\n    return n*2\nprint(double(6))',
+      'hint': 'Použi return.',
+      'mode': 'syntax'},
+     {'title': 'Review conversion',
+      'prompt': 'Preveď "5" na int a pripočítaj 2.',
+      'example': 'print(int("5")+2)',
+      'hint': 'Preveď text pred sčítaním.',
+      'mode': 'syntax'},
+     {'title': 'Review explanation',
+      'prompt': 'Napíš komentár, ktorý vysvetlí, čo tvoj krátky program robí.',
+      'example': '# Add two numbers\nprint(2+3)',
+      'hint': 'Komentár začína #.',
+      'mode': 'syntax'}]
 pos=st.session_state.task_positions.get(chapter,0)
 task=tasks[pos]
 explanation,original_example,_=get_lesson(topic)
 st.subheader(f'Chapter {chapter+1}: {topic}')
 st.markdown('### 📖 Explanation / Vysvetlenie')
 st.write(explanation)
-if topic in DETAILED_EXPLANATIONS:
-    details = DETAILED_EXPLANATIONS[topic]
+if topic in DETAILED_EXPLANATIONS or chapter == 19:
+    details = ('Opakovanie / Review: spoj premenné, typy, zoznamy, cykly a funkcie do malých programov. Zameraj sa na rozdiel medzi syntaktickou správnosťou a správnosťou výsledku.', '`numbers = [2, 4, 6]` potom `print(len(numbers))`', '1. Vytvorí sa zoznam. 2. len zistí počet prvkov. 3. print vypíše 3.', 'Skontroluj presný text výstupu, počet riadkov a požadovaný postup.') if chapter == 19 else DETAILED_EXPLANATIONS[topic]
     st.markdown('#### 🧩 Podrobné vysvetlenie')
     st.markdown(details[0])
     st.markdown('**Ukážka zápisu:**')
