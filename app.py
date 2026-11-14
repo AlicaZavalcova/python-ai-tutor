@@ -1,4 +1,6 @@
 import ast
+import io
+import tokenize
 import streamlit as st
 
 st.set_page_config(page_title="Python Tutor", page_icon="🐍", layout="wide")
@@ -3052,10 +3054,65 @@ if topic in DETAILED_EXPLANATIONS or chapter == 19:
     st.markdown(details[2])
     st.markdown('**Pozor na časté chyby:**')
     st.warning(details[3])
+# Zobrazi iba znaky, ktore sa naozaj pouzivaju v priklade aktualnej ulohy.
+SYMBOL_HELP = {
+    'quotes': ('`"..."` / `\'...\'`', 'Úvodzovky označujú textový reťazec (string).'),
+    '=': ('`=`', 'Priradenie hodnoty do premennej.'),
+    '==': ('`==`', 'Porovnanie, či sú dve hodnoty rovnaké.'),
+    '!=': ('`!=`', 'Porovnanie, či sú dve hodnoty rozdielne.'),
+    '>': ('`>`', 'Je väčšie než.'),
+    '<': ('`<`', 'Je menšie než.'),
+    '>=': ('`>=`', 'Je väčšie alebo rovné.'),
+    '<=': ('`<=`', 'Je menšie alebo rovné.'),
+    '(': ('`( )`', 'Okrúhle zátvorky sa používajú napríklad pri volaní funkcie.'),
+    '[': ('`[ ]`', 'Hranaté zátvorky vytvárajú zoznam alebo pristupujú k prvku.'),
+    '{': ('`{ }`', 'Zložené zátvorky sa používajú napríklad pre slovníky a množiny.'),
+    ':': ('`:`', 'Dvojbodka uvádza blok príkazov alebo oddeľuje kľúč od hodnoty v slovníku.'),
+    ',': ('`,`', 'Čiarka oddeľuje argumenty alebo položky.'),
+    '.': ('`.`', 'Bodka umožňuje prístup k metóde alebo vlastnosti objektu.'),
+    '+': ('`+`', 'Sčítanie čísel alebo spájanie textov.'),
+    '-': ('`-`', 'Odčítanie alebo záporné znamienko.'),
+    '*': ('`*`', 'Násobenie; v niektorých kontextoch rozbaľuje hodnoty.'),
+    '**': ('`**`', 'Umocňovanie.'),
+    '/': ('`/`', 'Delenie.'),
+    '//': ('`//`', 'Celočíselné delenie smerom nadol.'),
+    '%': ('`%`', 'Zvyšok po delení.'),
+    '+=': ('`+=`', 'Pripočíta hodnotu a výsledok uloží do premennej.'),
+    '-=': ('`-=`', 'Odpočíta hodnotu a výsledok uloží do premennej.'),
+    '*=': ('`*=`', 'Vynásobí hodnotou a výsledok uloží do premennej.'),
+    '/=': ('`/=`', 'Vydelí hodnotou a výsledok uloží do premennej.'),
+    '->': ('`->`', 'Označuje návratový typ vo funkcii.'),
+    '@': ('`@`', 'Označuje dekorátor (alebo násobenie matíc).'),
+    '#': ('`#`', 'Za znakom # nasleduje komentár, ktorý Python nevykoná.'),
+    'indent': ('**Odsadenie**', 'Odsadené riadky patria do bloku, napríklad pod if, for alebo def.'),
+}
+
+def symbols_in_task(example_code):
+    """Tokenizacia zabrani tomu, aby sa znaky v texte povazovali za operator."""
+    found = set()
+    try:
+        tokens = tokenize.generate_tokens(io.StringIO(example_code).readline)
+        for token in tokens:
+            if token.type == tokenize.STRING:
+                found.add('quotes')
+            elif token.type == tokenize.COMMENT:
+                found.add('#')
+            elif token.type == tokenize.INDENT:
+                found.add('indent')
+            elif token.type == tokenize.OP and token.string in SYMBOL_HELP:
+                found.add(token.string)
+    except (tokenize.TokenError, IndentationError):
+        pass
+    return [SYMBOL_HELP[key] for key in SYMBOL_HELP if key in found]
+
 st.markdown('### 🔎 What do the symbols mean? / Čo znamenajú znaky?')
-with st.expander('Úvodzovky, =, ==, (), :, odsadenie a ďalšie znaky',expanded=True):
-    for symbol,meaning in SYMBOLS:
-        st.markdown(f'**{symbol}** – {meaning}')
+with st.expander('Znaky použité v príklade tejto úlohy', expanded=True):
+    task_symbols = symbols_in_task(task['example'])
+    if task_symbols:
+        for symbol, meaning in task_symbols:
+            st.markdown(f'**{symbol}** – {meaning}')
+    else:
+        st.write('V príklade tejto úlohy nie sú žiadne špeciálne znaky na vysvetlenie.')
 st.markdown('### 💡 Example / Príklad')
 st.code(task['example'],language='python')
 st.write('**Čo sa stane po zadaní príkazu?**')
